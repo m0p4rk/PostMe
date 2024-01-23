@@ -15,7 +15,7 @@ public class File {
 		private Integer userId;
 		private Integer postId;
 		private String filename;
-		private String filpath;
+		private String filepath;
 		private long filesize;
 		
 		@Builder
@@ -24,7 +24,7 @@ public class File {
 			this.userId = userId;
 			this.postId = postId;
 			this.filename = filename;
-			this.filpath = filpath;
+			this.filepath = filpath;
 			this.filesize = filesize;
 	}
 }

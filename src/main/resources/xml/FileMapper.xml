@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.postme.mapper.FileMapper">
+
+	<select id="getAttachmentFileByFileId"
+			parameterType="_int"
+			resultType="com.spring.postme.model.File">
+		SELECT
+			id,
+			userId,
+			postId,
+			filename,
+			filepath
+		FROM files
+		WHERE id = #{fileId}
+	</select>
+	
+	<insert id="insertAttachmentFile"
+			parameterType="com.spring.postme.model.File" keyProperty="id">
+		INSERT INTO files(
+			postId,
+			filename,
+			filesize,
+			filepath
+			)
+		VALUES(
+			#{postId}
+			#{attachmentOriginalFileName}
+			#{attachmentFileSize}
+			#{filePath}
+			)
+	</insert>
+	
+	<delete id="deleteAttachmentFileByFileId"
+			parameterType="_int">
+		DELETE
+		FROM files
+		WHERE fileId = ${fileId}
+	</delete>
+	
+</mapper>

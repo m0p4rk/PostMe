@@ -6,4 +6,8 @@ public interface FileMapper {
 
 	File getAttachmentFileByFileId(int fileId);
 
+	int insertAttachmentFile(File attachmentFile);
+
+	int deleteAttachmentFileByFileId(int fileId);
+
 }

@@ -29,27 +29,29 @@ public class FileController {
 	@Autowired
 	private FileService fileService;
 	
-	@RequestMapping(value = "/file-test", method  = RequestMethod.GET)
-	public String fileTestView() throws SQLException, Exception {
-		fileService.getAttachmentFileByFileId(4);
-		return "fileTest";
-	}
-	
-	@PostMapping
-	public void uploadFile() {
+	@GetMapping(value = "/download/file/{fileId}")
+	public ResponseEntity<Resource> downloadFile(@PathVariable int fileId) {
 		
+		File attachmentFile = null;
+		Resource resource = null;
+		try {
+			attachmentFile = fileService.getAttachmentFileByFileId(fileId);
+//			System.out.println(attachmentFile);
+			Path path = Paths.get(attachmentFile.getFilepath() + "\\" + attachmentFile.getFilename());
+			resource = new InputStreamResource(Files.newInputStream(path));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		headers.setContentDisposition(ContentDisposition
+											.builder("attachment")
+											.filename(attachmentFile.getFilename())
+											.build());
+		
+		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
