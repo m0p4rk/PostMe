@@ -1,5 +1,5 @@
 package com.spring.postme.mapper;
 
-public class CommentMapper {
+public interface CommentMapper {
 
 }
