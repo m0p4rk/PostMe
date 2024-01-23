@@ -43,7 +43,7 @@
 <body>
     <div class="container">
         <h2 class="mb-4 text-center">PostMe</h2>
-        <form action="/login.do" method="post" onsubmit="return validateForm()">
+        <form action="/login.do" method="post">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" id="username" name="username" required>
@@ -57,13 +57,6 @@
         </form>
         <div id='error-message'></div>
     </div>
-
-
-
-
-
-
-
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
