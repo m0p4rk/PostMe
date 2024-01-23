@@ -8,7 +8,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-            <c:if test="${not empty sessionScope.user}">
+            <c:if test="${not empty sessionScope.user}"> <!-- 추후 세션 명칭 변경  -->
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">로그아웃</a>
                 </li>

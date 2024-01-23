@@ -10,4 +10,19 @@ public class HomeController {
     public String showMainPage() {
         return "main"; // 'views' 폴더 내의 'main.jsp'를 가리킵니다.
     }
+    
+    @GetMapping("/login")
+    public String showLoginPage() {
+    	return "login";
+    }
+    
+    @GetMapping("/register")
+    public String showRegisterPage() {
+    	return "register";
+    }
+    
+    @GetMapping("/postdetail")
+    public String showPostDetailPage(){
+    	return "postDetail";
+    }
 }

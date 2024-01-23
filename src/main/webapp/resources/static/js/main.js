@@ -1,26 +1,34 @@
-// 게시글을 로드
 function loadPosts(page) {
     $.ajax({
-        url: '/posts?page=' + page, // 게시글 데이터를 불러올 서버의 URL
+        url: '/posts?page=' + page,
         type: 'GET',
+        beforeSend: function () {
+            $('#posts-container').html('<div>Loading...</div>');
+        },
         success: function (response) {
-            $('#posts-container').html(''); // 컨테이너 초기화
+            $('#posts-container').html('');
             response.posts.forEach(post => {
-                $('#posts-container').append(
+                var postElement = $(
                     '<div class="post-preview">' +
                     '<h3>' + post.title + '</h3>' +
                     '<p>' + post.summary + '</p>' +
                     '<a href="/postDetail?id=' + post.id + '">자세히 보기</a>' +
                     '</div>'
                 );
+                postElement.on('click', function() {
+                    window.location.href = '/postDetail?id=' + post.id;
+                });
+                $('#posts-container').append(postElement);
             });
+        },
+        error: function () {
+            $('#posts-container').html('<div>게시글을 불러오는 데 실패했습니다.</div>');
         }
     });
 }
 
-// 페이지네이션 설정
 function setupPagination(totalPages) {
-    $('#pagination').html(''); // 페이지네이션 초기화
+    $('#pagination').html('');
     for (let i = 1; i <= totalPages; i++) {
         $('#pagination').append(
             '<a href="#" onclick="loadPosts(' + i + '); return false;">' + i + '</a> '
@@ -28,8 +36,7 @@ function setupPagination(totalPages) {
     }
 }
 
-// 게시글과 페이지네이션 로드
 $(document).ready(function () {
-    loadPosts(1); // 초기 페이지 로드
-    setupPagination(10); // 총 10개의 페이지가 있다 가정
+    loadPosts(1);
+    setupPagination(10);
 });
