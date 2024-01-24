@@ -18,4 +18,6 @@ public interface PostServiceImpl {
 	List<Post> findPostsByPage(int page, int pageSize);
 
 	int countPosts();
+
+	void updatePost(Post post);
 }

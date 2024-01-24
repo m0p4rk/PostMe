@@ -17,15 +17,16 @@
 	<!-- 게시글 추가 -->
 	<insert id="insertPost"
 		parameterType="com.spring.postme.model.Post">
-		INSERT INTO Posts (noticeNum, userId, title, content)
-		VALUES (#{noticeNum}, #{userId}, #{title}, #{content})
+		INSERT INTO Posts (userId, title, content)
+		VALUES
+		(#{userId}, #{title}, #{content})
 	</insert>
 
 	<!-- 게시글 업데이트 -->
 	<update id="updatePost"
 		parameterType="com.spring.postme.model.Post">
 		UPDATE Posts
-		SET noticeNum = #{noticeNum},
+		SET
 		userId = #{userId},
 		title = #{title},
 		content = #{content}
@@ -34,13 +35,15 @@
 
 	<!-- ID로 게시글 삭제 -->
 	<delete id="deleteById" parameterType="java.lang.Integer">
-		DELETE FROM Posts WHERE id = #{id}
+		DELETE FROM Posts WHERE id
+		= #{id}
 	</delete>
 
 	<!-- 페이징 처리된 게시글 조회 -->
 	<select id="findPostsByPage" parameterType="map"
 		resultType="com.spring.postme.model.Post">
-		SELECT * FROM Posts ORDER BY id DESC LIMIT #{offset}, #{pageSize}
+		SELECT * FROM Posts ORDER BY id DESC LIMIT #{offset},
+		#{pageSize}
 	</select>
 
 	<!-- 전체 게시글 수 조회 -->
