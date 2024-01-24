@@ -22,10 +22,11 @@ public class PostFileService implements PostFileServiceImpl{
 	public PostFile getAttachmentFileByFileId(int fileId) throws SQLException, Exception { 
 		PostFile attachmentFile = null;
 		attachmentFile = attachmentFileMapper.getAttachmentFileByFileId(fileId);
-		System.out.println(attachmentFile);
+//		System.out.println(attachmentFile);
 		return attachmentFile;
 	}
 	
+	// postId로 file 찾기
 	public PostFile getAttachmentFileByPostId(int postId) {
 		PostFile attachmentFile = null;
 		
@@ -45,8 +46,6 @@ public class PostFileService implements PostFileServiceImpl{
 		// 실행자 파일경로로 수정필요
 		String filePath = "C:\\Users\\user\\Desktop\\Boardproject1\\filetest";
 		String attachmentOriginalFileName = file.getOriginalFilename();
-//		UUID uuid = UUID.randomUUID();
-//		String attachmentFileName = uuid.toString() + "_" + attachmentOriginalFileName;
 		Long attachmentFileSize = file.getSize();
 		
 		PostFile attachmentFile = PostFile.builder()
@@ -60,7 +59,6 @@ public class PostFileService implements PostFileServiceImpl{
 		int res = attachmentFileMapper.insertAttachmentFile(attachmentFile);
 		
 		if(res != 0) {
-			file.transferTo(new File(filePath + "\\" + attachmentOriginalFileName));
 			result = true;
 		}
 		}catch(Exception e){
@@ -82,10 +80,10 @@ public class PostFileService implements PostFileServiceImpl{
 		
 		boolean serverDeleteResult = serverFile.delete();
 		
-		System.out.println("serverDeleteResult : " + serverDeleteResult);
+//		System.out.println("serverDeleteResult : " + serverDeleteResult);
 		// db 삭제
 		int res = attachmentFileMapper.deleteAttachmentFileByFileId(fileId);
-		System.out.println("res : " + res);
+//		System.out.println("res : " + res);
 		
 		if(serverDeleteResult && res != 0) {
 			result = true;
