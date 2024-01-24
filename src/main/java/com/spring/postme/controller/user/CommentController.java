@@ -32,13 +32,13 @@ public class CommentController {
 		model.addAttribute("CommentList", commentList);
 		
 		
-		return "postDetail";
+		return "main";
 	}
 	
 	// 댓글작성
 	@RequestMapping(value = "/post", method = RequestMethod.GET)
 	public String insertCommentForm() {
-		return "postDetail";
+		return "main";
 	}
 	
 	
@@ -52,7 +52,7 @@ public class CommentController {
 		try {
 			CommentResult = commentservice.insertComment(newComment);
 			if(CommentResult) {
-				view = "postDetail";
+				view = "main";
 			} 
 			
 		} catch (Exception e) {
@@ -74,14 +74,14 @@ public class CommentController {
 		model.addAttribute("comment", comment);
 		
 		
-		return "postDetail";
+		return "main";
 	}
 	
 	
 	@RequestMapping(value = "/comm/{userId}", method = RequestMethod.PUT)
 	public String updateComment(@PathVariable Integer userId,
 							@ModelAttribute Comment newComment) {
-		String view = "postDetail";
+		String view = "main";
 		
 		Comment comment = null;
 		boolean result = false;
@@ -112,7 +112,7 @@ public class CommentController {
 	// 댓글 삭제
 	@RequestMapping(value = "/comm/{userId}", method = RequestMethod.DELETE)
 	public String deleteComment(@PathVariable Integer userId) throws SQLException, Exception {
-		String view = "postDetail";
+		String view = "main";
 		boolean result = false;
 		
 		result = commentservice.deleteComment(userId);
