@@ -1,90 +1,111 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Post Details</title>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<style>
-.modal-content, #comment-form {
-	background-color: #f8f8f8; /* 희미한 회색 배경 */
-}
-
-.form-group {
-	margin-bottom: 15px;
-}
-</style>
+    <meta charset="utf-8">
+    <title>Post Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .post-detail-container, .comments-section {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .comment {
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
-	<jsp:include page="navbar.jsp" />
-	<div class="container">
-		<div id="post-details">
-			<h2>${post.title}</h2>
-			<p>${post.content}</p>
-		</div>
+    <jsp:include page="navbar.jsp" />
+    <div class="container mt-3">
+        <div class="post-detail-container">
+            <h3>${post.title}</h3>
+            <p>${post.content}</p>
+            <small>작성일: ${post.createdAt}</small>
+            <!-- 게시글 수정 및 삭제 버튼 -->
+            <c:if test="${post.userId == sessionScope.loggedInUserId}">
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editPostModal">수정</button>
+                <a href="${pageContext.request.contextPath}/posts/delete/${post.id}" class="btn btn-danger btn-sm">삭제</a>
+            </c:if>
+        </div>
 
-		<!-- 수정 버튼 -->
-		<button type="button" class="btn btn-primary" data-toggle="modal"
-			data-target="#editModal">수정</button>
+        <!-- 댓글 섹션 -->
+        <div class="comments-section">
+            <h5>댓글</h5>
+            <c:forEach items="${commentsList}" var="comment">
+                <div class="comment">
+                    <p>${comment.content}</p>
+                    <small>작성자: ${comment.userId}, 작성일: ${comment.createdAt}</small>
+                    <c:if test="${comment.userId == sessionScope.loggedInUserId}">
+                        <!-- 댓글 수정 및 삭제 버튼 -->
+                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editCommentModal-${comment.id}">수정</button>
+                        <a href="${pageContext.request.contextPath}/comments/delete/${comment.id}?postId=${post.id}" class="btn btn-danger btn-sm">삭제</a>
+                    </c:if>
+                </div>
+            </c:forEach>
 
-		<!-- 삭제 버튼 -->
-		<form action="/posts/delete/${post.id}" method="post"
-			style="display: inline;">
-			<input type="submit" value="삭제" class="btn btn-danger">
-		</form>
+            <!-- 댓글 작성 폼 -->
+            <form action="${pageContext.request.contextPath}/comments/add" method="post" class="mt-3">
+                <textarea name="content" class="form-control" placeholder="댓글을 입력하세요"></textarea>
+                <input type="hidden" name="postId" value="${post.id}">
+                <input type="hidden" name="userId" value="${sessionScope.loggedInUserId}">
+                <button type="submit" class="btn btn-primary mt-2">댓글 작성</button>
+            </form>
+        </div>
+    </div>
 
-		<!-- Modal -->
-		<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
-			aria-labelledby="editModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="editModalLabel">게시글 수정</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<form action="/posts/update/${post.id}" method="post">
-						<div class="modal-body">
-							<div class="form-group">
-								<label for="title">제목</label> <input type="text"
-									class="form-control" id="title" name="title"
-									value="${post.title}">
-							</div>
-							<div class="form-group">
-								<label for="content">내용</label>
-								<textarea class="form-control" id="content" name="content">${post.content}</textarea>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">닫기</button>
-							<input type="submit" class="btn btn-primary" value="저장">
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
+    <!-- 게시글 수정 모달 -->
+    <div class="modal fade" id="editPostModal" tabindex="-1" role="dialog" aria-labelledby="editPostModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editPostModalLabel">게시글 수정</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="${pageContext.request.contextPath}/posts/update/${post.id}" method="post">
+                        <input type="text" class="form-control mb-2" name="title" value="${post.title}">
+                        <textarea class="form-control" name="content">${post.content}</textarea>
+                        <button type="submit" class="btn btn-primary mt-2">저장</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- 댓글 수정 모달 -->
+    <c:forEach items="${commentsList}" var="comment">
+        <c:if test="${comment.userId == sessionScope.loggedInUserId}">
+            <div class="modal fade" id="editCommentModal-${comment.id}" tabindex="-1" role="dialog" aria-labelledby="editCommentModalLabel-${comment.id}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editCommentModalLabel-${comment.id}">댓글 수정</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="${pageContext.request.contextPath}/comments/update/${comment.id}" method="post">
+                                <textarea class="form-control" name="content">${comment.content}</textarea>
+                                <input type="hidden" name="postId" value="${post.id}">
+                                <button type="submit" class="btn btn-primary mt-2">저장</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </c:if>
+    </c:forEach>
 
-		<!-- 댓글 입력란 -->
-		<div id="comment-form" class="mt-4">
-			<form action="/posts/comment/${post.id}" method="post">
-				<div class="form-group">
-					<label for="comment">댓글 작성</label>
-					<textarea class="form-control" id="comment" name="comment"
-						placeholder="댓글을 입력하세요"></textarea>
-				</div>
-				<button type="submit" class="btn btn-primary">댓글 등록</button>
-			</form>
-		</div>
-	</div>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Bootstrap 및 jQuery 스크립트 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
