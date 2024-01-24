@@ -4,6 +4,8 @@ import com.spring.postme.model.User;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
 
 @Mapper
 public interface UserMapper {
@@ -22,4 +24,10 @@ public interface UserMapper {
 
     // ID로 사용자 삭제
     void deleteById(Integer id);
+
+	User getUserbyUsernameAndPassword(@Param("username")String username,@Param("password") String password);
+
+	int insertUsers(User newUser);
+	
+
 }

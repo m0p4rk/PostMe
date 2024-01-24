@@ -14,7 +14,17 @@
         <result property="isAdmin" column="is_admin" />
         <result property="createdAt" column="created_at" />
     </resultMap>
-
+	<select id="getUserbyUsernameAndPassword"
+			resultType="com.spring.postme.model.User">
+			SELECT * FROM users
+			WHERE username = #{username} AND password = #{password}
+	</select>
+		
+	<insert id="insertUsers"
+			parameterType="com.spring.postme.model.User">
+		INSERT INTO users (username, name, email, password)
+		VALUES (#{username}, #{name}, #{email}, #{password})
+	</insert>
     <!-- 모든 사용자 조회 -->
     <select id="findAll" resultMap="userResultMap">
         SELECT * FROM users
