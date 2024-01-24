@@ -1,5 +1,6 @@
 package com.spring.postme.service.user;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.UUID;
 
@@ -8,19 +9,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.spring.postme.mapper.FileMapper;
-import com.spring.postme.model.File;
+import com.spring.postme.mapper.PostFileMapper;
+import com.spring.postme.model.PostFile;
+import com.spring.postme.service.impl.PostFileServiceImpl;
 
 @Service
-public class FileService {
+public class PostFileService implements PostFileServiceImpl{
 	@Autowired
-	FileMapper attachmentFileMapper;
+	PostFileMapper attachmentFileMapper;
 	
 	// FileId로 file 출력
-	public File getAttachmentFileByFileId(int fileId) throws SQLException, Exception { 
-		File attachmentFile = null;
+	public PostFile getAttachmentFileByFileId(int fileId) throws SQLException, Exception { 
+		PostFile attachmentFile = null;
 		attachmentFile = attachmentFileMapper.getAttachmentFileByFileId(fileId);
 		System.out.println(attachmentFile);
+		return attachmentFile;
+	}
+	
+	public PostFile getAttachmentFileByPostId(int postId) {
+		PostFile attachmentFile = null;
+		
+		attachmentFile = attachmentFileMapper.getAttachmentFileByPostId(postId);
+		
 		return attachmentFile;
 	}
 	
@@ -39,7 +49,7 @@ public class FileService {
 //		String attachmentFileName = uuid.toString() + "_" + attachmentOriginalFileName;
 		Long attachmentFileSize = file.getSize();
 		
-		File attachmentFile = File.builder()
+		PostFile attachmentFile = PostFile.builder()
 									.postId(postId)
 									.filename(attachmentOriginalFileName)
 									.filesize(attachmentFileSize)
@@ -50,7 +60,7 @@ public class FileService {
 		int res = attachmentFileMapper.insertAttachmentFile(attachmentFile);
 		
 		if(res != 0) {
-			file.transferTo(new java.io.File(filePath + "\\" + attachmentOriginalFileName));
+			file.transferTo(new File(filePath + "\\" + attachmentOriginalFileName));
 			result = true;
 		}
 		}catch(Exception e){
@@ -62,14 +72,13 @@ public class FileService {
 	
 	@Transactional
 	public boolean deleteAttachmentFileByFileNo(int fileId) throws Exception {
-		System.out.println("contoller진입");
 		boolean result = false;
-		File file = null;
+		PostFile file = null;
 		
 		file = getAttachmentFileByFileId(fileId);
 		
 		// 로컬 서버 파일 삭제
-		java.io.File serverFile = new java.io.File(file.getFilepath() + "\\" + file.getFilename());
+		File serverFile = new File(file.getFilepath() + "\\" + file.getFilename());
 		
 		boolean serverDeleteResult = serverFile.delete();
 		

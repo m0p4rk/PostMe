@@ -1,13 +1,15 @@
 package com.spring.postme.mapper;
 
-import com.spring.postme.model.File;
+import com.spring.postme.model.PostFile;
 
-public interface FileMapper {
+public interface PostFileMapper {
 
-	File getAttachmentFileByFileId(int fileId);
+	PostFile getAttachmentFileByFileId(int fileId);
 
-	int insertAttachmentFile(File attachmentFile);
+	int insertAttachmentFile(PostFile attachmentFile);
 
 	int deleteAttachmentFileByFileId(int fileId);
+
+	PostFile getAttachmentFileByPostId(int postId);
 
 }

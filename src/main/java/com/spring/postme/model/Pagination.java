@@ -24,10 +24,10 @@ public class Pagination {
 
     // 페이지 계산 메서드
     private void calculatePages() {
-        this.endPage = (int) (Math.ceil(pageNum * 1.0 / pageAmount)) * pageAmount;
+        this.endPage = (int)(Math.ceil(pageNum * 1.0 / pageAmount)) * pageAmount;
         this.startPage = endPage - (pageAmount - 1);
 
-        realEnd = (int) (Math.ceil(total * 1.0 / pageAmount));
+        realEnd = (int)(Math.ceil(total * 1.0 / pageAmount));
 
         if (endPage > realEnd) {
             this.endPage = realEnd;

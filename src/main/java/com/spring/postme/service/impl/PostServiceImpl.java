@@ -1,5 +1,7 @@
 package com.spring.postme.service.impl;
 
-public interface PostServiceImpl {
+import com.spring.postme.model.PostFile;
 
+public interface PostServiceImpl {
+	
 }

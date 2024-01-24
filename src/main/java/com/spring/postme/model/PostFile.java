@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-public class File {
+public class PostFile {
 		private Integer id;
 		private Integer userId;
 		private Integer postId;
@@ -19,7 +19,7 @@ public class File {
 		private long filesize;
 		
 		@Builder
-		public File(Integer id, Integer userId, Integer postId, String filename, String filpath, long filesize) {
+		public PostFile(Integer id, Integer userId, Integer postId, String filename, String filpath, long filesize) {
 			this.id = id;
 			this.userId = userId;
 			this.postId = postId;

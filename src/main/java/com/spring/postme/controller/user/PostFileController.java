@@ -3,7 +3,6 @@ package com.spring.postme.controller.user;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -13,26 +12,25 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spring.postme.model.File;
-import com.spring.postme.service.user.FileService;
+import com.spring.postme.model.PostFile;
+import com.spring.postme.service.user.PostFileService;
 
 @RestController
-public class FileController {
+public class PostFileController {
 	
 	@Autowired
-	private FileService fileService;
+	private PostFileService fileService;
 	
 	@GetMapping(value = "/download/file/{fileId}")
 	public ResponseEntity<Resource> downloadFile(@PathVariable int fileId) {
 		
-		File attachmentFile = null;
+		PostFile attachmentFile = null;
 		Resource resource = null;
 		try {
 			attachmentFile = fileService.getAttachmentFileByFileId(fileId);
@@ -53,6 +51,25 @@ public class FileController {
 		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
 	
+	
+	@ResponseBody
+	@DeleteMapping(value = "/file/{fileId}")
+	public String deleteFileByFileNo(@PathVariable int fileId) throws Exception {
+		boolean result = false;
+		String resultCode = "";
+		
+		result = fileService.deleteAttachmentFileByFileNo(fileId);
+		System.out.println(result);
+		if (result) {
+			System.out.println("성공");
+			resultCode = "S000";
+		}else {
+			System.out.println("실패");
+			resultCode = "F000";
+		}
+		
+		return resultCode;
+	}
 	
 	
 }
