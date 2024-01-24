@@ -139,3 +139,4 @@ target
 .gradle
 README.html
 .exercism
+src/main/webapp/WEB-INF/web.xml
