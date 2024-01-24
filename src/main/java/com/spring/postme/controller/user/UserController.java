@@ -1,16 +1,15 @@
 package com.spring.postme.controller.user;
 
-import com.spring.postme.model.User;
-import com.spring.postme.service.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
-@RestController
-@RequestMapping("/users")
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import com.spring.postme.model.User;
+import com.spring.postme.service.user.UserService;
+
+@Controller
 public class UserController {
 
 	private final UserService userService;
@@ -20,88 +19,35 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	// 로그인
-
-	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String login(String username, String password, HttpSession session) {
-		String view = "error";
-		User user = null;
-		try {
-			user = userService.getUserbyUsernameAndPassword(username, password);
-			System.out.println(user);
-
-			if (user != null)
-				session.setAttribute("user", user.getUsername());
-			session.setAttribute("user", user.getId());
-
-			view = "redirect:/main";
-			return view;
-
-		} catch (Exception e) {
-			e.printStackTrace();
+	@PostMapping("/login.do")
+	public String login(@RequestParam("username") String username, @RequestParam("password") String password,
+			HttpSession session) {
+		User user = userService.getUserByUsername(username);
+		if (user != null) {
+			session.setAttribute("user", user.getUsername());
+			session.setAttribute("userId", user.getId());
+			return "redirect:/";
+		} else {
+			return "redirect:/login?error=true";
 		}
-		return view;
 	}
 
-	// 로그아웃
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	// 로그아웃 처리
+	@GetMapping("/logout")
 	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/login";
+	}
 
-		if (session != null) {
-			session.invalidate();
+	// 회원가입 처리
+	@PostMapping("/register.do")
+	public String register(@ModelAttribute User newUser) {
+		boolean result = userService.insertUser(newUser);
+		if (result) {
+			return "redirect:/login";
+		} else {
+			return "redirect:/register?error=true";
 		}
-		return "redirect:/main";
 	}
 
-	// 회원가입
-	@RequestMapping(value = "/register.do", method = RequestMethod.POST)
-	public String insertUser(@ModelAttribute User newUser) {
-		String view = "error";
-		boolean result = false;
-		try {
-			result = userService.insertUsers(newUser);
-			System.out.println(result);
-
-			if (result) {
-				view = "redirect:/main";
-				return view;
-
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return view;
-		}
-
-		return view;
-	}
-
-	// 모든 사용자 조회
-	@GetMapping
-	public List<User> getAllUsers() {
-		return userService.findAll();
-	}
-
-	// ID로 사용자 조회
-	@GetMapping("/{id}")
-	public User getUserById(@PathVariable Integer id) {
-		return userService.findById(id);
-	}
-
-	// 사용자 추가
-	@PostMapping
-	public void addUser(@RequestBody User user) {
-		userService.saveUser(user);
-	}
-
-	// 사용자 정보 업데이트
-	@PutMapping("/{id}")
-	public void updateUser(@PathVariable Integer id, @RequestBody User user) {
-		userService.updateUser(id, user);
-	}
-
-	// ID로 사용자 삭제
-	@DeleteMapping("/{id}")
-	public void deleteUser(@PathVariable Integer id) {
-		userService.deleteUser(id);
-	}
 }

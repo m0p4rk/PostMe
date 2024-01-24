@@ -1,61 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.postme.mapper.UserMapper">
+	<!-- 결과 매핑 정의 -->
+	<resultMap id="userResultMap"
+		type="com.spring.postme.model.User">
+		<!-- 필드 매핑 -->
+	</resultMap>
 
-    <!-- 결과 매핑 정의 -->
-    <resultMap id="userResultMap" type="com.spring.postme.model.User">
-        <id property="id" column="id" />
-        <result property="username" column="username" />
-        <result property="password" column="password" />
-        <result property="name" column="name" />
-        <result property="email" column="email" />
-        <result property="isAdmin" column="is_admin" />
-        <result property="createdAt" column="created_at" />
-    </resultMap>
-	<select id="getUserbyUsernameAndPassword"
-			resultType="com.spring.postme.model.User">
-			SELECT * FROM users
-			WHERE username = #{username} AND password = #{password}
+	<!-- 사용자 이름으로 사용자 조회 -->
+	<select id="getUserByUsername" parameterType="string"
+		resultMap="userResultMap">
+		SELECT * FROM users WHERE username = #{username}
 	</select>
-		
-	<insert id="insertUsers"
-			parameterType="com.spring.postme.model.User">
-		INSERT INTO users (username, name, email, password)
-		VALUES (#{username}, #{name}, #{email}, #{password})
+
+	<insert id="insertUser"
+		parameterType="com.spring.postme.model.User">
+		INSERT INTO users (username, password, name, email, isAdmin, createdAt)
+		VALUES (#{username}, #{password}, #{name}, #{email}, #{isAdmin},
+		#{createdAt})
 	</insert>
-    <!-- 모든 사용자 조회 -->
-    <select id="findAll" resultMap="userResultMap">
-        SELECT * FROM users
-    </select>
 
-    <!-- ID로 사용자 조회 -->
-    <select id="findById" parameterType="int" resultMap="userResultMap">
-        SELECT * FROM users WHERE id = #{id}
-    </select>
-
-    <!-- 사용자 추가 -->
-    <insert id="insertUser" parameterType="com.spring.postme.model.User">
-        INSERT INTO users (username, password, name, email, is_admin, created_at)
-        VALUES (#{username}, #{password}, #{name}, #{email}, #{isAdmin}, #{createdAt})
-    </insert>
-
-    <!-- 사용자 정보 업데이트 -->
-    <update id="updateUser" parameterType="com.spring.postme.model.User">
-        UPDATE users
-        SET username = #{username},
-            password = #{password},
-            name = #{name},
-            email = #{email},
-            is_admin = #{isAdmin},
-            created_at = #{createdAt}
-        WHERE id = #{id}
-    </update>
-
-    <!-- ID로 사용자 삭제 -->
-    <delete id="deleteById" parameterType="int">
-        DELETE FROM users WHERE id = #{id}
-    </delete>
-
+	<!-- 기타 쿼리들... -->
 </mapper>
