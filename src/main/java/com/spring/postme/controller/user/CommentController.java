@@ -28,10 +28,11 @@ public class CommentController {
         return commentService.getCommentById(id);
     }
 
-    @PostMapping("/update")
-    public String updateComment(Comment comment) {
+    @PostMapping("/update/{id}")
+    public String updateComment(@PathVariable("id") int commentId, Comment comment) {
+        comment.setId(commentId);
         commentService.updateComment(comment);
-        return "redirect:/posts/" + comment.getPostId(); 
+        return "redirect:/posts/" + comment.getPostId();
     }
 
     @GetMapping("/delete/{id}")
