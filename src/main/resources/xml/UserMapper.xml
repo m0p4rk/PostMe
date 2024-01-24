@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.spring.postme.mapper.UserMapper">
+  	<select id="getUserbyUsernameAndPassword"
+			resultType="com.spring.postme.model.User">
+			SELECT * FROM users
+			WHERE username = #{username} AND password = #{password}
+	</select>
+		
+	<insert id="insertUser"
+			parameterType="com.spring.postme.model.User">
+		INSERT INTO users (username, name, email, password)
+		VALUES (#{username}, #{name}, #{email}, #{password})
+	</insert>
+	
+	
+</mapper>
