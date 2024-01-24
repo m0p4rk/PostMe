@@ -44,10 +44,10 @@
 			filepath
 			)
 		VALUES(
-			#{postId}
-			#{attachmentOriginalFileName}
-			#{attachmentFileSize}
-			#{filePath}
+			#{postId},
+			#{filename},
+			#{filesize},
+			#{filepath}
 			)
 	</insert>
 	
@@ -55,7 +55,7 @@
 			parameterType="_int">
 		DELETE
 		FROM Postfiles
-		WHERE fileId = ${fileId}
+		WHERE id = ${id}
 	</delete>
 	
 </mapper>

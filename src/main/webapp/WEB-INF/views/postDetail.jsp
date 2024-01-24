@@ -25,9 +25,10 @@
         <div class="post-detail-container">
             <h3>${post.title}</h3>
             <p>${post.content}</p>
+            <p><strong>첨부파일 : </strong><a href="/download/file/${fileInfo.id}">${fileInfo.filename}</a></p>
             <small>작성일: ${post.createdAt}</small>
             <!-- 게시글 수정 및 삭제 버튼 -->
-            <c:if test="${post.userId == sessionScope.loggedInUserId}">
+            <c:if test="${post.userId == sessionScope.userId}">
                 <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editPostModal">수정</button>
                 <a href="${pageContext.request.contextPath}/posts/delete/${post.id}" class="btn btn-danger btn-sm">삭제</a>
             </c:if>
@@ -69,9 +70,12 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="${pageContext.request.contextPath}/posts/update/${post.id}" method="post">
+                    <form action="${pageContext.request.contextPath}/posts/update/${post.id}" method="post" enctype="multipart/form-data">
                         <input type="text" class="form-control mb-2" name="title" value="${post.title}">
                         <textarea class="form-control" name="content">${post.content}</textarea>
+                        <div class="form-group">
+			                <input type="file" class="form-control-file" id="file" name="file">
+			            </div>
                         <button type="submit" class="btn btn-primary mt-2">저장</button>
                     </form>
                 </div>

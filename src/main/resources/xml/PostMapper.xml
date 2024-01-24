@@ -16,19 +16,18 @@
 
 	<!-- 게시글 추가 -->
 	<insert id="insertPost"
-		parameterType="com.spring.postme.model.Post">
-		INSERT INTO Posts (noticeNum, userId, title, content)
-		VALUES (#{noticeNum}, #{userId}, #{title}, #{content})
+		parameterType="com.spring.postme.model.Post" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO Posts (userId, title, content)
+		VALUES (#{userId}, #{title}, #{content})
 	</insert>
 
 	<!-- 게시글 업데이트 -->
 	<update id="updatePost"
 		parameterType="com.spring.postme.model.Post">
 		UPDATE Posts
-		SET noticeNum = #{noticeNum},
-		userId = #{userId},
-		title = #{title},
-		content = #{content}
+		SET userId = #{userId}
+		,	title = #{title}
+		,	content = #{content}
 		WHERE id = #{id}
 	</update>
 

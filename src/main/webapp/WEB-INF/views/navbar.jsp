@@ -12,7 +12,7 @@
 		<ul class="navbar-nav ml-auto">
 			<c:if test="${not empty sessionScope.user}">
 				<!-- 추후 세션 명칭 변경  -->
-				<li class="nav-item"><a class="nav-link" href="/dashboard">개시글 작성</a>
+				<li class="nav-item"><a class="nav-link" href="/dashboard">게시글 작성</a>
 				</li>
 				<li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a>
 				</li>

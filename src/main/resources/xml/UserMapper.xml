@@ -14,7 +14,13 @@
         <result property="isAdmin" column="is_admin" />
         <result property="createdAt" column="created_at" />
     </resultMap>
-
+	
+	<!-- 사용자 이름으로 사용자 조회 -->
+	<select id="getUserByUsername" parameterType="string"
+		resultMap="userResultMap">
+		SELECT * FROM users WHERE username = #{username}
+	</select>
+	
     <!-- 모든 사용자 조회 -->
     <select id="findAll" resultMap="userResultMap">
         SELECT * FROM users

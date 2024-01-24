@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <title>새 게시글 작성</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
@@ -16,7 +16,7 @@
 
     <div class="container form-container">
         <h2>새 게시글 작성</h2>
-        <form action="${pageContext.request.contextPath}/posts/add" method="post" enctype="multipart/form-data">
+        <form action="${pageContext.request.contextPath}/posts/add" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
             <div class="form-group">
                 <label for="title">제목</label>
                 <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요" required>
@@ -27,7 +27,7 @@
             </div>
             <div class="form-group">
                 <label for="file">파일 첨부</label>
-                <input type="file" class="form-control-file" id="file" name="file" multiple>
+                <input type="file" class="form-control-file" id="file" name="file">
             </div>
             <button type="submit" class="btn btn-primary">게시글 작성</button>
         </form>
