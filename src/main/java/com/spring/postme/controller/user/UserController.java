@@ -25,7 +25,7 @@ public class UserController {
 		User user = userService.getUserByUsername(username);
 		if (user != null) {
 			session.setAttribute("user", user.getUsername());
-			session.setAttribute("userId", user.getId());
+			session.setAttribute("loggedInUserId", user.getId());
 			return "redirect:/";
 		} else {
 			return "redirect:/login?error=true";
@@ -36,7 +36,7 @@ public class UserController {
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/login";
+		return "redirect:/";
 	}
 
 	// 회원가입 처리

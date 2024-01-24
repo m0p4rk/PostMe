@@ -6,7 +6,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.spring.postme.mapper.CommentMapper;
 import com.spring.postme.mapper.PostMapper;
 import com.spring.postme.model.Post;
 import com.spring.postme.service.impl.PostServiceImpl;
@@ -15,10 +17,12 @@ import com.spring.postme.service.impl.PostServiceImpl;
 public class PostService implements PostServiceImpl {
 
 	private final PostMapper postMapper;
+	private final CommentMapper commentMapper;
 
 	@Autowired
-	public PostService(PostMapper postMapper) {
+	public PostService(PostMapper postMapper, CommentMapper commentMapper) {
 		this.postMapper = postMapper;
+		this.commentMapper = commentMapper;
 	}
 
 	@Override
@@ -47,10 +51,16 @@ public class PostService implements PostServiceImpl {
 	}
 
 	@Override
-	public void deletePost(Integer id) {
-		postMapper.deleteById(id);
+	@Transactional
+	public void deletePost(Integer postId) {
+		// 먼저 해당 게시글의 모든 댓글 삭제
+		commentMapper.deleteByPostId(postId);
+
+		// 그 다음 게시글 삭제
+		postMapper.deleteById(postId);
 	}
 
+	@Override
 	public List<Post> findPostsByPage(int page, int pageSize) {
 		int offset = (page - 1) * pageSize;
 		Map<String, Object> params = new HashMap<>();
@@ -62,6 +72,11 @@ public class PostService implements PostServiceImpl {
 	@Override
 	public int countPosts() {
 		return postMapper.countPosts();
+	}
+
+	@Override
+	public void updatePost(Post post) {
+		postMapper.updatePost(post);
 	}
 
 }

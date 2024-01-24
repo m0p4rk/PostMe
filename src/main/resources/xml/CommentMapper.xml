@@ -29,5 +29,10 @@
     <delete id="deleteComment" parameterType="java.lang.Integer">
         DELETE FROM Comments WHERE id = #{id}
     </delete>
+    
+    <!-- postId에 해당하는 모든 댓글 삭제 -->
+    <delete id="deleteByPostId" parameterType="int">
+        DELETE FROM comments WHERE postId = #{postId}
+    </delete>
 
 </mapper>
