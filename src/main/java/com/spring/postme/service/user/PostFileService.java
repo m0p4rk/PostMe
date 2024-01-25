@@ -44,7 +44,7 @@ public class PostFileService implements PostFileServiceImpl {
 			}
 
 			// 파일 저장 경로 설정 (실행 환경에 따라 수정 필요)
-			String filePath = "C:\\Users\\mosep\\OneDrive - University of Georgia\\Pictures\\meme";
+			String filePath = "C:\\Users\\user\\Desktop\\Boardproject1\\filetest";
 
 			// 파일명 및 파일 크기
 			String attachmentOriginalFileName = file.getOriginalFilename();

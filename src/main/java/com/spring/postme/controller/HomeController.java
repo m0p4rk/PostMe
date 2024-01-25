@@ -3,6 +3,8 @@ package com.spring.postme.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.spring.postme.service.user.PostService;
+
 @Controller
 public class HomeController {
 	
