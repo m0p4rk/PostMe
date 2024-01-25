@@ -36,11 +36,11 @@ public class HomeController {
 //    	return "AdminMain";
 //    }
     
-    @GetMapping("/admin/users")
-    public String showAdminUserPage() {
-    	return "AdminUser";
-    }
-    
+//    @GetMapping("/admin/users")
+//    public String showAdminUserPage() {
+//    	return "AdminUser";
+//    }
+//    
     @GetMapping("/admin/posts")
     public String showAdminPostPage() {
     	return "AdminPost";

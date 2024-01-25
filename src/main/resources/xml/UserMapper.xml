@@ -52,8 +52,10 @@
 		password = #{password},
 		name = #{name},
 		email = #{email}
+		isAdmin = #{isAdmin}
 		WHERE id = #{id}
 	</update>
+
 
 	<!-- ID로 사용자 삭제 -->
 	<delete id="deleteById" parameterType="int">
@@ -69,5 +71,11 @@
 	<delete id="deleteAllUsers">
 		DELETE FROM users
 	</delete>
-
+	 <select id="getUserById" parameterType="java.lang.Integer" resultType="com.spring.postme.model.User">
+        SELECT * FROM users WHERE id = #{userId}
+    </select>
+    
+  	<select id="getUserList" resultType="com.spring.postme.model.User">
+        SELECT * FROM users
+    </select>
 </mapper>
