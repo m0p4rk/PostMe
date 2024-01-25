@@ -29,7 +29,7 @@ public class PostController {
 	private final PostService postService;
 	private final CommentService commentService;
 	private final PostFileService postFileService;
-	
+
 	private static final int POSTS_PER_PAGE = 6;
 
 	@Autowired
@@ -56,38 +56,28 @@ public class PostController {
 	public String showPostDetail(@PathVariable Integer id, Model model) {
 		Post post = postService.findById(id);
 		List<Comment> comments = commentService.getCommentsByPostId(id);
-		
+
 		PostFile fileInfo = postFileService.getAttachmentFileByPostId(id);
-		
-		
+
 		model.addAttribute("fileInfo", fileInfo);
 		model.addAttribute("post", post);
 		model.addAttribute("commentsList", comments);
 
 		return "postDetail";
 	}
-	
+
 	@PostMapping("/posts/add")
 	public String savePosts(MultipartFile file, @ModelAttribute("post") Post post, HttpSession session) {
-		
-		Integer userId = (Integer) session.getAttribute("userId");
-		
+
+		Integer userId = (Integer) session.getAttribute("loggedInUserId");
 		post.setUserId(userId);
-		System.out.println(userId);
 		postService.savePost(post);
-		System.out.println(post.getId());
-		System.out.println(file.getName());
-		if(file.getOriginalFilename() != null) {
+		if (file.getOriginalFilename() != null) {
 			postFileService.insertAttachmentFile(file, post.getId());
 		}
-		
-		
-		
 		return "redirect:/";
 	}
-	
 
-	
 //	@PostMapping("/posts/add")
 //	public String addPost(@RequestParam("title") String title, @RequestParam("content") String content,
 //			@RequestParam(value = "file", required = false) MultipartFile file, HttpSession session) {
@@ -119,25 +109,23 @@ public class PostController {
 		// 삭제 후 메인 페이지로 리디렉션
 		return "redirect:/";
 	}
-	
+
 	@PostMapping("/posts/update/{id}")
-    public String updatePost(@PathVariable("id") Integer id, 
-                             @ModelAttribute Post post, 
-                             RedirectAttributes redirectAttributes,HttpSession session) {
-		
+	public String updatePost(@PathVariable("id") Integer id, @ModelAttribute Post post,
+			RedirectAttributes redirectAttributes, HttpSession session) {
+
 		Integer userId = (Integer) session.getAttribute("loggedInUserId");
-        // 게시글의 ID를 설정
-        post.setId(id);
-        post.setUserId(userId);
-        // 게시글 업데이트 로직 수행
-        postService.updatePost(post);
+		// 게시글의 ID를 설정
+		post.setId(id);
+		post.setUserId(userId);
+		// 게시글 업데이트 로직 수행
+		postService.updatePost(post);
 
-        // 수정 후 리다이렉트 시 메시지 전달
-        redirectAttributes.addFlashAttribute("successMessage", "게시글이 수정되었습니다.");
+		// 수정 후 리다이렉트 시 메시지 전달
+		redirectAttributes.addFlashAttribute("successMessage", "게시글이 수정되었습니다.");
 
-        // 게시글 상세 페이지로 리다이렉트
-        return "redirect:/posts/" + id;
-    }
-
+		// 게시글 상세 페이지로 리다이렉트
+		return "redirect:/posts/" + id;
+	}
 
 }

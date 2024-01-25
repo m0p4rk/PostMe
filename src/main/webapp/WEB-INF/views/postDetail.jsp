@@ -32,7 +32,7 @@
 			<small>작성자: ${post.userId}</small>
 			<small>작성일: ${post.createdAt}</small>
 			<!-- 게시글 수정 및 삭제 버튼 -->
-			<c:if test="${post.userId == sessionScope.userId}">
+			<c:if test="${post.userId == sessionScope.loggedInUserId}">
 				<button class="btn btn-primary btn-sm" data-toggle="modal"
 					data-target="#editPostModal">수정</button>
 				<a href="${pageContext.request.contextPath}/posts/delete/${post.id}"
