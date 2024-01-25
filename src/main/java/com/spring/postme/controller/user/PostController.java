@@ -66,18 +66,29 @@ public class PostController {
 	}
 
 	@PostMapping("/posts/add")
-	public String savePosts(MultipartFile file, @ModelAttribute("post") Post post, HttpSession session)
+	public String savePosts(MultipartFile file, @ModelAttribute("post") Post post, HttpSession session, Model model)
 			throws Exception {
-
+		if (isPostEmpty(post)) {
+			model.addAttribute("warningMessage", "Please fill in the title and content.");
+	        return "redirect:/dashboard";
+	    }
 		Integer userId = (Integer) session.getAttribute("loggedInUserId");
 		post.setUserId(userId);
+
 		postService.savePost(post);
+	
 		if (file.getOriginalFilename() != null) {
 			postFileService.insertAttachmentFile(file, post.getId(), post.getUserId());
 		}
 		return "redirect:/";
 	}
-
+	private boolean isPostEmpty(Post post) {
+	    return post == null ||
+	           (post.getTitle() != null && post.getTitle().trim().isEmpty()) &&
+	           (post.getContent() != null && post.getContent().trim().isEmpty());
+	}
+	
+	
 	@GetMapping("/posts/delete/{postId}")
 	public String deletePost(@PathVariable("postId") Integer postId) {
 		// 게시글 삭제 로직 구현
