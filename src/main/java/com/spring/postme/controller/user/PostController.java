@@ -121,6 +121,6 @@ public class PostController {
 	    redirectAttributes.addFlashAttribute("successMessage", "게시글이 수정되었습니다.");
 	    return "redirect:/posts/" + id;
 	}
-
+	
 
 }

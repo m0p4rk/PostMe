@@ -71,32 +71,33 @@
 	</div>
 
 	<!-- 게시글 수정 모달 -->
-	<div class="modal fade" id="editPostModal" tabindex="-1" role="dialog"
-		aria-labelledby="editPostModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="editPostModalLabel">게시글 수정</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form
-						action="${pageContext.request.contextPath}/posts/update/${post.id}"
-						method="post" enctype="multipart/form-data">
-						<input type="text" class="form-control mb-2" name="title"
-							value="${post.title}">
-						<textarea class="form-control" name="content">${post.content}</textarea>
-							<div class="form-group">
-				                <input type="file" class="form-control-file" id="file" name="file">
-				            </div>
-						<button type="submit" class="btn btn-primary mt-2">저장</button>
-					</form>
-				</div>
-			</div>
-		</div>
+		<div class="modal fade" id="editPostModal" tabindex="-1" role="dialog"
+	     aria-labelledby="editPostModalLabel" aria-hidden="true">
+	    <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="editPostModalLabel">게시글 수정</h5>
+	                <button type="button" class="close" data-dismiss="modal"
+	                        aria-label="Close">
+	                    <span aria-hidden="true">&times;</span>
+	                </button>
+	            </div>
+	            <div class="modal-body">
+	                <form id="editPostForm"
+	                      action="${pageContext.request.contextPath}/posts/update/${post.id}"
+	                      method="post" enctype="multipart/form-data"
+	                      onsubmit="return validateForm()">
+	                    <input type="text" class="form-control mb-2" name="title"
+	                           value="${post.title}">
+	                    <textarea class="form-control" name="content">${post.content}</textarea>
+	                    <div class="form-group">
+	                        <input type="file" class="form-control-file" id="file" name="file">
+	                    </div>
+	                    <button type="submit" class="btn btn-primary mt-2">저장</button>
+	                </form>
+	            </div>
+	        </div>
+	    </div>
 	</div>
 
 	<!-- 댓글 수정 모달 -->
@@ -135,5 +136,18 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+    function validateForm() {
+        var title = document.forms["editPostForm"]["title"].value.trim();
+        var content = document.forms["editPostForm"]["content"].value.trim();
+
+        if (title === "" || content === "") {
+            alert("내용을 작성해주세요.");
+            return false; 
+        }
+
+        return true; 
+    }
+</script>
 </body>
 </html>
