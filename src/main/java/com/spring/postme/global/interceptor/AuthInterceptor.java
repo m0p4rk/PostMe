@@ -22,13 +22,15 @@ public class AuthInterceptor implements HandlerInterceptor{
 			response.sendRedirect("/login");
 			return false;
 		}
+		  
 			return true;
 	}
 	@Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
             ModelAndView modelAndView) throws Exception {
         
-       
+
+	
         
         
     }

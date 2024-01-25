@@ -39,12 +39,13 @@
 	</beans:bean>
 	
 	<interceptors>
-		<interceptor> 					
+		<interceptor> 																	
 			<mapping path="/dashboard/**"/> 										
 			<mapping path="/comments/**"/> 										
-			<exclude-mapping path="/login.do"/> 		
+			<exclude-mapping path="/login"/>		
 			<exclude-mapping path="/main"/> 				
 			<beans:bean	id="firstInterceptor" class="com.spring.postme.global.interceptor.AuthInterceptor"/>	
 		</interceptor>
+		
 	</interceptors>
 </beans:beans>
