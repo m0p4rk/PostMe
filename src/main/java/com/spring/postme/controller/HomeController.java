@@ -31,10 +31,10 @@ public class HomeController {
     	return "postDetail";
     }
     
-    @GetMapping("/admin/dashboard")
-    public String showAdminMainPage() {
-    	return "AdminMain";
-    }
+//    @GetMapping("/admin/dashboard")
+//    public String showAdminMainPage() {
+//    	return "AdminMain";
+//    }
     
     @GetMapping("/admin/users")
     public String showAdminUserPage() {

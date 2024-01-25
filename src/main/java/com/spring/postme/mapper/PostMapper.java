@@ -24,5 +24,7 @@ public interface PostMapper {
 	int countPosts();
 	
 	int deleteByPostId(Integer postId);
+	
+	int deleteAllPosts();
 
 }

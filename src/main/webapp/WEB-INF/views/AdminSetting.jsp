@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Settings</title>
+    <title>관리자 설정</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .settings-container {
@@ -29,10 +29,10 @@
         <jsp:include page="sidebar.jsp" />
         <div class="settings-container">
             <h1>설정</h1>
-            <form action="/admin/reset" method="post">
+            <form action="/admin/deleteAllData" method="post">
                 <div class="form-group">
                     <p>이 버튼을 누르면 전체 데이터가 초기화됩니다. 이 작업은 되돌릴 수 없습니다.</p>
-                    <button type="submit" class="btn btn-primary reset-button">전체 초기화</button>
+                    <button type="submit" class="btn reset-button">전체 초기화</button>
                 </div>
             </form>
         </div>

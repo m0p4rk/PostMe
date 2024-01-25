@@ -4,5 +4,8 @@ import com.spring.postme.model.User;
 
 public interface UserServiceImpl {
 
-    User getUserByUsername(String username);
+	User getUserByUsername(String username);
+
+	int countUsers();
+
 }

@@ -47,7 +47,7 @@
 	<update id="updateUser"
 		parameterType="com.spring.postme.model.User">
 		UPDATE users
-		SET 
+		SET
 		username = #{username},
 		password = #{password},
 		name = #{name},
@@ -59,6 +59,15 @@
 	<delete id="deleteById" parameterType="int">
 		DELETE FROM users WHERE id
 		= #{id}
+	</delete>
+
+	<!-- 모든 사용자의 수 조회 -->
+	<select id="countUsers" resultType="int">
+		SELECT COUNT(*) FROM users
+	</select>
+
+	<delete id="deleteAllUsers">
+		DELETE FROM users
 	</delete>
 
 </mapper>

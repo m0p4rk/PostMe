@@ -9,6 +9,8 @@ public interface UserMapper {
     User getUserByUsername(@Param("username") String username);
 
 	void insertUser(User newUser);
+	
+	int countUsers();
 
-    // 기타 메소드들...
+    int deleteAllUsers();
 }

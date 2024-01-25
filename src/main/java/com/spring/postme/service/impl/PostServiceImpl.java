@@ -20,5 +20,5 @@ public interface PostServiceImpl {
 	int countPosts();
 
 	void updatePost(Post post);
-}
 
+}

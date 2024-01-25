@@ -16,10 +16,10 @@
 
 	<!-- 게시글 추가 -->
 	<insert id="insertPost"
-		parameterType="com.spring.postme.model.Post" 
-		useGeneratedKeys="true" keyProperty="id">
+		parameterType="com.spring.postme.model.Post" useGeneratedKeys="true"
+		keyProperty="id">
 		INSERT INTO Posts (userId, title, content)
-		VALUES 
+		VALUES
 		(#{userId}, #{title}, #{content})
 	</insert>
 
@@ -28,8 +28,9 @@
 		parameterType="com.spring.postme.model.Post">
 		UPDATE Posts
 		SET userId = #{userId}
-		,	title = #{title}
-		,	content = #{content}
+		, title = #{title}
+		,
+		content = #{content}
 		WHERE id = #{id}
 	</update>
 
@@ -50,5 +51,9 @@
 	<select id="countPosts" resultType="int">
 		SELECT COUNT(*) FROM Posts
 	</select>
+
+	<delete id="deleteAllPosts">
+		DELETE FROM posts
+	</delete>
 
 </mapper>
