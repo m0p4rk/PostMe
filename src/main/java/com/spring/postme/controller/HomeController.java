@@ -1,5 +1,7 @@
 package com.spring.postme.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -17,7 +19,10 @@ public class HomeController {
     }
     
     @GetMapping("/login")
-    public String showLoginPage() {
+    public String showLoginPage(HttpSession session) {
+    	if (session.getAttribute("user") != null) {
+            return "redirect: /";
+        }
     	return "login";
     }
     
