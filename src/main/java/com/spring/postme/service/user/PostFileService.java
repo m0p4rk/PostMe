@@ -35,20 +35,26 @@ public class PostFileService implements PostFileServiceImpl {
 	}
 
 	// insert
-	public boolean insertAttachmentFile(MultipartFile file, int postId) {
+	public boolean insertAttachmentFile(MultipartFile file, int postId, int userId) {
 		boolean result = false;
+
 		try {
 			if (file.isEmpty()) {
 				return false;
 			}
-			// 실행자 파일경로로 수정필요
-			String filePath = "C:\\Users\\user\\Desktop\\Boardproject1\\filetest";
+
+			// 파일 저장 경로 설정 (실행 환경에 따라 수정 필요)
+			String filePath = "C:\\Users\\mosep\\OneDrive - University of Georgia\\Pictures\\meme";
+
+			// 파일명 및 파일 크기
 			String attachmentOriginalFileName = file.getOriginalFilename();
 			Long attachmentFileSize = file.getSize();
 
-			PostFile attachmentFile = PostFile.builder().postId(postId).filename(attachmentOriginalFileName)
-					.filesize(attachmentFileSize).filpath(filePath).build();
+			// 파일 정보 PostFile 객체 생성
+			PostFile attachmentFile = PostFile.builder().postId(postId).userId(userId)
+					.filename(attachmentOriginalFileName).filesize(attachmentFileSize).filepath(filePath).build();
 
+			// 파일 정보 데이터베이스에 저장
 			int res = attachmentFileMapper.insertAttachmentFile(attachmentFile);
 
 			if (res != 0) {
@@ -57,6 +63,7 @@ public class PostFileService implements PostFileServiceImpl {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return result;
 	}
 
@@ -83,5 +90,15 @@ public class PostFileService implements PostFileServiceImpl {
 
 		return result;
 	}
+
+	public boolean deleteFileByPostId(Integer postId) {
+        try {
+            int rowsAffected = attachmentFileMapper.deleteByPostId(postId);
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

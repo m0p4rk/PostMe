@@ -12,4 +12,6 @@ public interface PostFileMapper {
 
 	PostFile getAttachmentFileByPostId(int postId);
 
+	int deleteByPostId(Integer postId);
+
 }

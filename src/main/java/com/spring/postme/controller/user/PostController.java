@@ -20,7 +20,6 @@ import com.spring.postme.model.Post;
 import com.spring.postme.model.PostFile;
 import com.spring.postme.service.user.CommentService;
 import com.spring.postme.service.user.PostFileService;
-
 import com.spring.postme.service.user.PostService;
 
 @Controller
@@ -67,39 +66,17 @@ public class PostController {
 	}
 
 	@PostMapping("/posts/add")
-	public String savePosts(MultipartFile file, @ModelAttribute("post") Post post, HttpSession session) {
+	public String savePosts(MultipartFile file, @ModelAttribute("post") Post post, HttpSession session)
+			throws Exception {
 
 		Integer userId = (Integer) session.getAttribute("loggedInUserId");
 		post.setUserId(userId);
 		postService.savePost(post);
 		if (file.getOriginalFilename() != null) {
-			postFileService.insertAttachmentFile(file, post.getId());
+			postFileService.insertAttachmentFile(file, post.getId(), post.getUserId());
 		}
 		return "redirect:/";
 	}
-
-//	@PostMapping("/posts/add")
-//	public String addPost(@RequestParam("title") String title, @RequestParam("content") String content,
-//			@RequestParam(value = "file", required = false) MultipartFile file, HttpSession session) {
-//
-//		Integer userId = (Integer) session.getAttribute("loggedInUserId");
-//
-//		// 새로운 Post 객체 생성
-//		Post post = new Post();
-//		post.setTitle(title);
-//		post.setContent(content);
-//		post.setUserId(userId);
-//
-//		// 파일 처리 로직 (파일이 있는 경우)
-//		if (file != null && !file.isEmpty()) {
-//			// 파일 처리 로직 구현
-//		}
-//
-//		// 게시글 저장
-//		postService.savePost(post);
-//
-//		return "redirect:/";
-//	}
 
 	@GetMapping("/posts/delete/{postId}")
 	public String deletePost(@PathVariable("postId") Integer postId) {
@@ -111,21 +88,28 @@ public class PostController {
 	}
 
 	@PostMapping("/posts/update/{id}")
-	public String updatePost(@PathVariable("id") Integer id, @ModelAttribute Post post,
-			RedirectAttributes redirectAttributes, HttpSession session) {
+	public String updatePost(@PathVariable("id") Integer id, 
+	                         @ModelAttribute Post post,
+	                         @RequestParam("file") MultipartFile file, // 파일 파라미터 추가
+	                         RedirectAttributes redirectAttributes, 
+	                         HttpSession session) {
 
-		Integer userId = (Integer) session.getAttribute("loggedInUserId");
-		// 게시글의 ID를 설정
-		post.setId(id);
-		post.setUserId(userId);
-		// 게시글 업데이트 로직 수행
-		postService.updatePost(post);
+	    Integer userId = (Integer) session.getAttribute("loggedInUserId");
+	    post.setId(id);
+	    post.setUserId(userId);
 
-		// 수정 후 리다이렉트 시 메시지 전달
-		redirectAttributes.addFlashAttribute("successMessage", "게시글이 수정되었습니다.");
+	    // 기존 파일이 있으면 삭제
+	    postFileService.deleteFileByPostId(id);
 
-		// 게시글 상세 페이지로 리다이렉트
-		return "redirect:/posts/" + id;
+	    // 새 파일이 있으면 저장
+	    if (!file.isEmpty()) {
+	        postFileService.insertAttachmentFile(file, id, userId);
+	    }
+
+	    postService.updatePost(post);
+	    redirectAttributes.addFlashAttribute("successMessage", "게시글이 수정되었습니다.");
+	    return "redirect:/posts/" + id;
 	}
+
 
 }

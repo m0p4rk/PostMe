@@ -19,12 +19,12 @@ public class PostFile {
 		private long filesize;
 		
 		@Builder
-		public PostFile(Integer id, Integer userId, Integer postId, String filename, String filpath, long filesize) {
+		public PostFile(Integer id, Integer userId, Integer postId, String filename, String filepath, long filesize) {
 			this.id = id;
 			this.userId = userId;
 			this.postId = postId;
 			this.filename = filename;
-			this.filepath = filpath;
+			this.filepath = filepath;
 			this.filesize = filesize;
 	}
 }

@@ -10,7 +10,7 @@ public interface PostFileServiceImpl {
 	
 	PostFile getAttachmentFileByFileId(int fileId) throws SQLException, Exception;
 	
-	boolean insertAttachmentFile(MultipartFile file, int postId) throws SQLException, Exception;
+	boolean insertAttachmentFile(MultipartFile file, int postId, int userId) throws SQLException, Exception;
 	
 	boolean deleteAttachmentFileByFileNo(int fileId) throws SQLException, Exception;
 	
