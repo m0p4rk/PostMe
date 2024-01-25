@@ -14,6 +14,12 @@
 </style>
 </head>
 <body>
+<%
+response.setHeader("Pragma", "no-cache"); 
+response.setHeader("Cache-Control", "no-cache"); 
+response.setHeader("Cache-Control", "no-store"); 
+response.setDateHeader("Expires", 0L); 
+%>
 	<jsp:include page="navbar.jsp" />
 
 	<div class="container form-container">

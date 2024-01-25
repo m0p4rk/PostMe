@@ -59,6 +59,12 @@
 </style>
 </head>
 <body>
+<%
+response.setHeader("Pragma", "no-cache"); //(HTTP 1.0 버전에서 지원하는 헤더)응답 받은 결과를 캐싱하지않도록함
+response.setHeader("Cache-Control", "no-cache"); //(HTTP 1.1 버전에서 지원하는헤더)응답 받은 결과를 캐싱하지 않고,뒤로가기 등을통해서 이동하는 경우
+response.setHeader("Cache-Control", "no-store"); // 페이지를 캐싱할수있으므로 no-store 값 또한 추가해 캐싱하지 않도록한다.
+response.setDateHeader("Expires", 0L); //현재 응답 결과의 만료일 설정
+%>
 	<jsp:include page="navbar.jsp" />
 	<div class="container">
 		<c:choose>

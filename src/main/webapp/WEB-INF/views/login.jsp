@@ -45,6 +45,14 @@ body {
 </style>
 </head>
 <body>
+<%
+response.setHeader("Pragma", "no-cache"); 
+response.setHeader("Cache-Control", "no-cache"); 
+response.setHeader("Cache-Control", "no-store"); 
+response.setDateHeader("Expires", 0L); 
+%>
+
+
 	<div class="container">
 		<h2 class="mb-4 text-center">PostMe</h2>
 		<form action="/login.do" method="post">
@@ -75,5 +83,12 @@ body {
 		let errorMessageElement = document.getElementById("error-message");
 		errorMessageElement.innerHTML = error;
 	</script>
+<script>
+    // Clear browser history on logout to prevent back button from showing cached content
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
+</script>
 </body>
 </html>
