@@ -23,11 +23,19 @@ public class UserController {
 	public String login(@RequestParam("username") String username, @RequestParam("password") String password,
 			HttpSession session) {
 		User user = userService.getUserByUsername(username);
-		if (user != null) {
+
+		if (user != null && user.getPassword().equals(password)) {
 			session.setAttribute("user", user.getUsername());
 			session.setAttribute("loggedInUserId", user.getId());
-			return "redirect:/";
+			session.setAttribute("isAdmin", user.getIsAdmin());
+
+			if (user.getIsAdmin()) {
+				return "redirect:/admin/dashboard";
+			} else {
+				return "redirect:/";
+			}
 		} else {
+			// 사용자 정보가 없거나 비밀번호가 틀린 경우
 			return "redirect:/login?error=true";
 		}
 	}

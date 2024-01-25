@@ -27,7 +27,6 @@
     <div class="d-flex">
         <jsp:include page="sidebar.jsp" />
         <div class="dashboard-container">
-            <h1>관리자 대시보드</h1>
             <div class="stats-box">
                 <h3>통계 정보</h3>
                 <p>총 사용자 수: ${totalUsers}</p>

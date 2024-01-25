@@ -12,8 +12,8 @@
 		<result property="password" column="password" />
 		<result property="name" column="name" />
 		<result property="email" column="email" />
-		<result property="isAdmin" column="is_admin" />
-		<result property="createdAt" column="created_at" />
+		<result property="isAdmin" column="isAdmin" />
+		<result property="createdAt" column="createdAt" />
 	</resultMap>
 
 	<!-- 사용자 이름으로 사용자 조회 -->

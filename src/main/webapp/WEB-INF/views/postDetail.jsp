@@ -31,7 +31,6 @@
 			<p><strong>첨부파일 : </strong><a href="/download/file/${fileInfo.id}">${fileInfo.filename}</a></p>
 			<small>작성자: ${post.userId}</small>
 			<small>작성일: ${post.createdAt}</small>
-			<!-- 게시글 수정 및 삭제 버튼 -->
 			<c:if test="${post.userId == sessionScope.loggedInUserId}">
 				<button class="btn btn-primary btn-sm" data-toggle="modal"
 					data-target="#editPostModal">수정</button>
@@ -131,7 +130,6 @@
 		</c:if>
 	</c:forEach>
 
-	<!-- Bootstrap 및 jQuery 스크립트 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

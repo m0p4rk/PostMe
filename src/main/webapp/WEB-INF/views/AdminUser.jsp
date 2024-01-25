@@ -7,7 +7,6 @@
     <title>User Management</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* 기존 스타일 */
         .user-management-container {
             flex-grow: 1;
             background-color: #f8f8f8;
@@ -30,7 +29,6 @@
             flex-grow: 1;
         }
 
-        /* 페이지네이션 스타일 */
         #pagination {
             display: flex;
             justify-content: center;
@@ -83,7 +81,6 @@
                 </c:otherwise>
             </c:choose>
             
-            <!-- 페이지네이션 -->
             <nav id="pagination">
                 <c:forEach begin="1" end="${totalPages}" var="pageNum">
                     <c:choose>

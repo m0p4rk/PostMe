@@ -83,17 +83,14 @@
 			</c:otherwise>
 		</c:choose>
 
-		<!-- 페이지네이션 -->
 		<nav id="pagination">
 			<c:forEach begin="1" end="${totalPages}" var="pageNum">
 				<c:choose>
 					<c:when test="${pageNum == currentPage}">
 						<span>${pageNum}</span>
-						<!-- 현재 페이지 -->
 					</c:when>
 					<c:otherwise>
 						<a href="?page=${pageNum}">${pageNum}</a>
-						<!-- 다른 페이지 링크 -->
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
