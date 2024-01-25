@@ -30,4 +30,24 @@ public class HomeController {
     public String showPostDetailPage(){
     	return "postDetail";
     }
+    
+    @GetMapping("/admin/dashboard")
+    public String showAdminMainPage() {
+    	return "AdminMain";
+    }
+    
+    @GetMapping("/admin/users")
+    public String showAdminUserPage() {
+    	return "AdminUser";
+    }
+    
+    @GetMapping("/admin/posts")
+    public String showAdminPostPage() {
+    	return "AdminPost";
+    }
+    
+    @GetMapping("/admin/settings")
+    public String showAdminSettingPage() {
+    	return "AdminSetting";
+    }
 }
