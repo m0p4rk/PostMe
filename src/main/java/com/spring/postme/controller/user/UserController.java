@@ -1,5 +1,6 @@
 package com.spring.postme.controller.user;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +35,13 @@ public class UserController {
 
 	// 로그아웃 처리
 	@GetMapping("/logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session,  HttpServletResponse response) {
 		session.invalidate();
-		return "redirect:/";
+		 //로그아웃 매핑이들어오면 캐싱 동작을 제어하는 헤더
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		 response.setHeader("Pragma", "no-cache");
+		 response.setHeader("Expires", "0");
+		return "redirect:login";
 	}
 
 	// 회원가입 처리
