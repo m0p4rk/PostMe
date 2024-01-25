@@ -68,7 +68,6 @@ public class PostController {
 	@PostMapping("/posts/add")
 	public String savePosts(MultipartFile file, @ModelAttribute("post") Post post, HttpSession session)
 			throws Exception {
-
 		Integer userId = (Integer) session.getAttribute("loggedInUserId");
 		post.setUserId(userId);
 		postService.savePost(post);
