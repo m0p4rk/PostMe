@@ -76,4 +76,8 @@ public class AdminService implements AdminServiceImpl {
         userMapper.updateUser(user);
     }
 
+    public void updateUserAdminStatus(Integer userId, boolean adminStatus) {
+        userMapper.updateUserAdminStatus(userId, adminStatus);
+    }
+
 }

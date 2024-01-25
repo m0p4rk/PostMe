@@ -23,4 +23,5 @@ public interface UserMapper {
 	
 	void updateUser(User user);
 
+	void updateUserAdminStatus(@Param("userId") Integer userId, @Param("adminStatus") boolean adminStatus);
 }

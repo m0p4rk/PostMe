@@ -78,4 +78,11 @@
   	<select id="getUserList" resultType="com.spring.postme.model.User">
         SELECT * FROM users
     </select>
+    
+    <!-- 사용자의 관리자 상태 업데이트 -->
+    <update id="updateUserAdminStatus">
+        UPDATE users
+        SET isAdmin = #{adminStatus}
+        WHERE id = #{userId}
+    </update>
 </mapper>
