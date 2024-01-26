@@ -19,115 +19,130 @@ import com.spring.postme.service.impl.AdminServiceImpl;
 @Service
 public class AdminService implements AdminServiceImpl {
 
-	private final PostMapper postMapper;
-	private final CommentMapper commentMapper;
-	private final UserMapper userMapper;
+    private final PostMapper postMapper;
+    private final CommentMapper commentMapper;
+    private final UserMapper userMapper;
 
-	@Autowired
-	public AdminService(PostMapper postMapper, CommentMapper commentMapper, UserMapper userMapper) {
-		this.postMapper = postMapper;
-		this.commentMapper = commentMapper;
-		this.userMapper = userMapper;
-	}
+    @Autowired
+    public AdminService(PostMapper postMapper, CommentMapper commentMapper, UserMapper userMapper) {
+        this.postMapper = postMapper;
+        this.commentMapper = commentMapper;
+        this.userMapper = userMapper;
+    }
 
-	@Override
-	public int countUsers() {
-		return userMapper.countUsers();
-	}
+    @Override
+    public int countUsers() {
+        return userMapper.countUsers();
+    }
 
-	@Override
-	public void deleteAllUsers() {
-		userMapper.deleteAllUsers();
-	}
+    @Override
+    public void deleteAllUsers() {
+        userMapper.deleteAllUsers();
+    }
 
-	@Override
-	public int countPosts() {
-		return postMapper.countPosts();
-	}
+    @Override
+    public int countPosts() {
+        return postMapper.countPosts();
+    }
 
-	@Override
-	public void deleteAllPosts() {
-		postMapper.deleteAllPosts();
-	}
+    @Override
+    public void deleteAllPosts() {
+        postMapper.deleteAllPosts();
+    }
 
-	@Override
-	public int countComments() {
-		return commentMapper.countComments();
-	}
+    @Override
+    public int countComments() {
+        return commentMapper.countComments();
+    }
 
-	@Override
-	public void deleteAllComments() {
-		commentMapper.deleteAllComments();
-	}
+    @Override
+    public void deleteAllComments() {
+        commentMapper.deleteAllComments();
+    }
 
-	@Transactional
-	public void deleteAllData() {
-		commentMapper.deleteAllComments();
-		postMapper.deleteAllPosts();
-		userMapper.deleteAllUsers();
-	}
+    @Transactional
+    public void deleteAllData() {
+        deleteAllComments();
+        deleteAllPosts();
+        deleteAllUsers();
+    }
 
-	public List<User> getUserList() {
-		return userMapper.getUserList();
-	}
+    public List<User> getUserList() {
+        return userMapper.getUserList();
+    }
 
-	public User getUserById(Integer userId) {
-		return userMapper.getUserById(userId);
-	}
+    public User getUserById(Integer userId) {
+        return userMapper.getUserById(userId);
+    }
 
-	public void editUser(User user) {
-		userMapper.updateUser(user);
-	}
+    public void editUser(User user) {
+        userMapper.updateUser(user);
+    }
 
-	public void updateUserAdminStatus(Integer userId, boolean adminStatus) {
-		userMapper.updateUserAdminStatus(userId, adminStatus);
-	}
+    public void updateUserAdminStatus(Integer userId, boolean adminStatus) {
+        userMapper.updateUserAdminStatus(userId, adminStatus);
+    }
 
-	public void deleteUserByUserId(Integer userId) {
-		userMapper.deleteUserById(userId);
-	}
+    public void deleteUserByUserId(Integer userId) {
+        userMapper.deleteUserById(userId);
+    }
 
-	public List<Post> getPostList() {
-		return postMapper.findAll();
-	}
+    public List<Post> getPostList() {
+        return postMapper.findAll();
+    }
 
-	public void deletePostById(Integer postId) {
-		postMapper.deleteByPostId(postId);
-	}
+    public void deletePostById(Integer postId) {
+        postMapper.deleteByPostId(postId);
+    }
 
-	public void deleteCommentByPostId(Integer postId) {
-		commentMapper.deleteByPostId(postId);
-	}
+    public void deleteCommentByPostId(Integer postId) {
+        commentMapper.deleteByPostId(postId);
+    }
 
-	@Transactional
-	public void insertSampleData() {
-		for (int i = 1; i <= 100; i++) {
-			User user;
-			String hashedPassword;
+    @Transactional
+    public void insertSampleData() {
+        insertSampleUsers();
+        insertSamplePosts();
+        insertSampleComments();
+    }
 
-			if (i == 1) {
-				hashedPassword = BCrypt.hashpw("admin", BCrypt.gensalt());
-				user = new User(null, "admin", hashedPassword, "Admin User", "admin@example.com", true,
-						LocalDateTime.now());
-				userMapper.insertAdmin(user);
-			} else {
-				hashedPassword = BCrypt.hashpw("password" + i, BCrypt.gensalt());
-				user = new User(null, "user" + i, hashedPassword, "User" + i, "user" + i + "@example.com", false,
-						LocalDateTime.now());
-				userMapper.insertUser(user);
-			}
-		}
+    private void insertSampleUsers() {
+        for (int i = 1; i <= 100; i++) {
+            User user = createSampleUser(i);
+            if (i == 1) {
+                userMapper.insertAdmin(user);
+            } else {
+                userMapper.insertUser(user);
+            }
+        }
+    }
 
-		for (int i = 1; i <= 100; i++) {
-			Post post = Post.builder().userId(i).title("Sample Title " + i).content("Sample content for post " + i)
-					.createdAt(LocalDateTime.now()).modifiedAt(LocalDateTime.now()).build();
-			postMapper.insertPost(post);
-		}
+    private User createSampleUser(int index) {
+        String hashedPassword = BCrypt.hashpw("password" + index, BCrypt.gensalt());
+        String username = (index == 1) ? "admin" : "user" + index;
+        String email = (index == 1) ? "admin@example.com" : "user" + index + "@example.com";
+        boolean isAdmin = index == 1;
 
-		for (int i = 1; i <= 100; i++) {
-			Comment comment = new Comment(null, i, i, "Sample comment " + i, LocalDateTime.now(), LocalDateTime.now());
-			commentMapper.insertComment(comment);
-		}
-	}
+        return new User(null, username, hashedPassword, "User" + index, email, isAdmin, LocalDateTime.now());
+    }
 
+    private void insertSamplePosts() {
+        for (int i = 1; i <= 100; i++) {
+            Post post = Post.builder()
+                            .userId(i)
+                            .title("Sample Title " + i)
+                            .content("Sample content for post " + i)
+                            .createdAt(LocalDateTime.now())
+                            .modifiedAt(LocalDateTime.now())
+                            .build();
+            postMapper.insertPost(post);
+        }
+    }
+
+    private void insertSampleComments() {
+        for (int i = 1; i <= 100; i++) {
+            Comment comment = new Comment(null, i, i, "Sample comment " + i, LocalDateTime.now(), LocalDateTime.now());
+            commentMapper.insertComment(comment);
+        }
+    }
 }
