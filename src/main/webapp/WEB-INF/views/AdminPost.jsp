@@ -70,6 +70,12 @@
 </style>
 </head>
 <body>
+<%
+response.setHeader("Pragma", "no-cache"); 
+response.setHeader("Cache-Control", "no-cache"); 
+response.setHeader("Cache-Control", "no-store"); 
+response.setDateHeader("Expires", 0L); 
+%>
 	<div class="d-flex">
 		<jsp:include page="sidebar.jsp" />
 		<div class="post-management-container">

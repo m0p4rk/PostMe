@@ -39,7 +39,9 @@
 	</beans:bean>
 	
 	<interceptors>
-		<interceptor> 																	
+		<interceptor> 					
+															
+			<mapping path="/admin/**"/> 										
 			<mapping path="/dashboard/**"/> 										
 			<mapping path="/comments/**"/> 										
 			<exclude-mapping path="/login"/>		
