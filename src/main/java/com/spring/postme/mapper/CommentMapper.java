@@ -6,19 +6,20 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface CommentMapper {
-	void insertComment(Comment comment);
 
-	List<Comment> findCommentsByPostId(Integer postId);
+    // Create
+    void insertComment(Comment comment);
 
-	Comment findCommentById(Integer id);
+    // Read
+    List<Comment> findCommentsByPostId(Integer postId);
+    Comment findCommentById(Integer id);
+    int countComments();
 
-	void updateComment(Comment comment);
+    // Update
+    void updateComment(Comment comment);
 
-	void deleteComment(Integer id);
-
-	void deleteByPostId(Integer postId);
-
-	int countComments();
-
-	int deleteAllComments();
+    // Delete
+    void deleteComment(Integer id);
+    void deleteByPostId(Integer postId);
+    int deleteAllComments();
 }

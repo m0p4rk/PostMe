@@ -4,14 +4,15 @@ import com.spring.postme.model.PostFile;
 
 public interface PostFileMapper {
 
-	PostFile getAttachmentFileByFileId(int fileId);
+    // Create
+    int insertAttachmentFile(PostFile attachmentFile);
 
-	int insertAttachmentFile(PostFile attachmentFile);
+    // Read
+    PostFile getAttachmentFileByFileId(int fileId);
+    PostFile getAttachmentFileByPostId(int postId);
 
-	int deleteAttachmentFileByFileId(int fileId);
-
-	PostFile getAttachmentFileByPostId(int postId);
-
-	int deleteByPostId(Integer postId);
+    // Delete
+    int deleteAttachmentFileByFileId(int fileId);
+    int deleteByPostId(Integer postId);
 
 }

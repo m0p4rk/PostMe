@@ -9,28 +9,32 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface PostMapper {
 
+	// Create
+	void insertPost(Post post);
+
+	// Read
 	List<Post> findAll();
 
 	Post findById(Integer id);
 
-	void insertPost(Post post);
-
-	void updatePost(Post post);
-
-	void deleteById(Integer id);
-
 	List<Post> findPostsByPage(Map<String, Object> params);
 
+	List<Post> searchPosts(String query);
+
+	List<Post> findSearchedPostsByPage(Map<String, Object> params);
+
 	int countPosts();
+
+	int searchPostsCount(String query);
+
+	// Update
+	void updatePost(Post post);
+
+	// Delete
+	int deleteById(Integer id);
 
 	int deleteByPostId(Integer postId);
 
 	int deleteAllPosts();
-
-	List<Post> searchPosts(String query);
-
-	int searchPostsCount(String query);
-
-	List<Post> findSearchedPostsByPage(Map<String, Object> params);
 
 }

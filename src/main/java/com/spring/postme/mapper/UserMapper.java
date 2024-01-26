@@ -9,23 +9,29 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface UserMapper {
-	User getUserByUsername(@Param("username") String username);
 
+	// Create
 	void insertUser(User newUser);
 
 	void insertAdmin(User newAdmin);
 
-	int countUsers();
-
-	int deleteAllUsers();
-
-	void deleteUserById(@Param("userId") Integer userId);
-
-	List<User> getUserList();
+	// Read
+	User getUserByUsername(@Param("username") String username);
 
 	User getUserById(@Param("userId") Integer userId);
 
+	List<User> getUserList();
+
+	int countUsers();
+
+	// Update
 	void updateUser(User user);
 
 	void updateUserAdminStatus(@Param("userId") Integer userId, @Param("adminStatus") boolean adminStatus);
+
+	// Delete
+	void deleteUserById(@Param("userId") Integer userId);
+
+	int deleteAllUsers();
+
 }
