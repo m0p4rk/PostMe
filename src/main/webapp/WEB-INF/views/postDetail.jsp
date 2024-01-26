@@ -48,7 +48,8 @@
 				<div class="comment">
 					<p>${comment.content}</p>
 					<small>작성자: ${comment.userId}, 작성일: ${comment.createdAt}</small>
-					<c:if test="${comment.userId == sessionScope.loggedInUserId or sessionScope.isAdmin}">
+					<c:if
+						test="${comment.userId == sessionScope.loggedInUserId or sessionScope.isAdmin}">
 						<!-- 댓글 수정 및 삭제 버튼 -->
 						<button class="btn btn-primary btn-sm" data-toggle="modal"
 							data-target="#editCommentModal-${comment.id}">수정</button>
@@ -103,7 +104,8 @@
 
 	<!-- 댓글 수정 모달 -->
 	<c:forEach items="${commentsList}" var="comment">
-		<c:if test="${comment.userId == sessionScope.loggedInUserId or sessionScope.isAdmin}">
+		<c:if
+			test="${comment.userId == sessionScope.loggedInUserId or sessionScope.isAdmin}">
 			<div class="modal fade" id="editCommentModal-${comment.id}"
 				tabindex="-1" role="dialog"
 				aria-labelledby="editCommentModalLabel-${comment.id}"
@@ -133,6 +135,7 @@
 		</c:if>
 	</c:forEach>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

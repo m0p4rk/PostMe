@@ -45,7 +45,8 @@
 
 	<insert id="insertAdmin"
 		parameterType="com.spring.postme.model.User">
-		INSERT INTO users (username, password, name, email, isAdmin)
+		INSERT INTO users (username, password, name, email,
+		isAdmin)
 		VALUES (#{username}, #{password}, #{name}, #{email}, true)
 	</insert>
 

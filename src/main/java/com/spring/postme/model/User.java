@@ -9,11 +9,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    private Integer id;
-    private String username;
-    private String password;
-    private String name;
-    private String email;
-    private Boolean isAdmin;
-    private LocalDateTime createdAt;
+	private Integer id;
+	private String username;
+	private String password;
+	private String name;
+	private String email;
+	private Boolean isAdmin;
+	private LocalDateTime createdAt;
 }

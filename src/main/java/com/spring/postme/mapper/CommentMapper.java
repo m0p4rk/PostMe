@@ -17,8 +17,8 @@ public interface CommentMapper {
 	void deleteComment(Integer id);
 
 	void deleteByPostId(Integer postId);
-	
+
 	int countComments();
-	
+
 	int deleteAllComments();
 }

@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Post {
 
-    private Integer id;
-    private Integer userId;
-    private String title;
-    private String content;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
-    
-    @Builder
+	private Integer id;
+	private Integer userId;
+	private String title;
+	private String content;
+	private LocalDateTime createdAt;
+	private LocalDateTime modifiedAt;
+
+	@Builder
 	public Post(Integer id, Integer noticeNum, Integer userId, String title, String content, LocalDateTime createdAt,
 			LocalDateTime modifiedAt) {
 		this.id = id;
@@ -27,6 +27,5 @@ public class Post {
 		this.createdAt = createdAt;
 		this.modifiedAt = modifiedAt;
 	}
-    
-    
+
 }

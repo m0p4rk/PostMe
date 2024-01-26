@@ -92,13 +92,13 @@ public class PostFileService implements PostFileServiceImpl {
 	}
 
 	public boolean deleteFileByPostId(Integer postId) {
-        try {
-            int rowsAffected = attachmentFileMapper.deleteByPostId(postId);
-            return rowsAffected > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+		try {
+			int rowsAffected = attachmentFileMapper.deleteByPostId(postId);
+			return rowsAffected > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 }

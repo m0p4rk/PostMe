@@ -9,10 +9,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Comment {
-    private Integer id;
-    private Integer postId;
-    private Integer userId;
-    private String content;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
+	private Integer id;
+	private Integer postId;
+	private Integer userId;
+	private String content;
+	private LocalDateTime createdAt;
+	private LocalDateTime modifiedAt;
 }

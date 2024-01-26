@@ -74,12 +74,12 @@
 </style>
 </head>
 <body>
-<%
-response.setHeader("Pragma", "no-cache"); 
-response.setHeader("Cache-Control", "no-cache"); 
-response.setHeader("Cache-Control", "no-store"); 
-response.setDateHeader("Expires", 0L); 
-%>
+	<%
+		response.setHeader("Pragma", "no-cache");
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0L);
+	%>
 	<div class="d-flex">
 		<jsp:include page="sidebar.jsp" />
 		<div class="user-management-container">
@@ -94,8 +94,7 @@ response.setDateHeader("Expires", 0L);
 					<div>
 						<button class="btn btn-primary" data-toggle="modal"
 							data-target="#editUserModal-${user.id}">수정</button>
-						<button class="btn btn-danger"
-							onclick="deleteUser('${user.id}')">삭제</button>
+						<button class="btn btn-danger" onclick="deleteUser('${user.id}')">삭제</button>
 						<input type="checkbox" id="adminCheck-${user.id}"
 							${user.isAdmin ? 'checked' : ''}
 							onclick="confirmAdminPromotion(${user.id})"> 관리자

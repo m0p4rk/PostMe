@@ -3,6 +3,7 @@ package com.spring.postme.service.admin;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -93,38 +94,38 @@ public class AdminService implements AdminServiceImpl {
 	public void deletePostById(Integer postId) {
 		postMapper.deleteByPostId(postId);
 	}
-	
+
 	public void deleteCommentByPostId(Integer postId) {
 		commentMapper.deleteByPostId(postId);
 	}
 
 	@Transactional
 	public void insertSampleData() {
-		// User 데이터 생성
 		for (int i = 1; i <= 100; i++) {
 			User user;
+			String hashedPassword;
+
 			if (i == 1) {
-				user = new User(null, "admin", "admin", "Admin User", "admin@example.com", true, LocalDateTime.now());
+				hashedPassword = BCrypt.hashpw("admin", BCrypt.gensalt());
+				user = new User(null, "admin", hashedPassword, "Admin User", "admin@example.com", true,
+						LocalDateTime.now());
 				userMapper.insertAdmin(user);
 			} else {
-				user = new User(null, "user" + i, "password" + i, "User" + i, "user" + i + "@example.com", false,
+				hashedPassword = BCrypt.hashpw("password" + i, BCrypt.gensalt());
+				user = new User(null, "user" + i, hashedPassword, "User" + i, "user" + i + "@example.com", false,
 						LocalDateTime.now());
 				userMapper.insertUser(user);
 			}
 		}
 
-		// Post 데이터 생성
 		for (int i = 1; i <= 100; i++) {
-			Post post = Post.builder().userId((i % 100) + 1).title("Sample Title " + i)
-					.content("Sample content for post " + i).createdAt(LocalDateTime.now())
-					.modifiedAt(LocalDateTime.now()).build();
+			Post post = Post.builder().userId(i).title("Sample Title " + i).content("Sample content for post " + i)
+					.createdAt(LocalDateTime.now()).modifiedAt(LocalDateTime.now()).build();
 			postMapper.insertPost(post);
 		}
 
-		// Comment 데이터 생성
 		for (int i = 1; i <= 100; i++) {
-			Comment comment = new Comment(null, (i % 100) + 1, (i % 100) + 1, "Sample comment " + i,
-					LocalDateTime.now(), LocalDateTime.now());
+			Comment comment = new Comment(null, i, i, "Sample comment " + i, LocalDateTime.now(), LocalDateTime.now());
 			commentMapper.insertComment(comment);
 		}
 	}

@@ -22,9 +22,9 @@ public interface PostMapper {
 	List<Post> findPostsByPage(Map<String, Object> params);
 
 	int countPosts();
-	
+
 	int deleteByPostId(Integer postId);
-	
+
 	int deleteAllPosts();
 
 }

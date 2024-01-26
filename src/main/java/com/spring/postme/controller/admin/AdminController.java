@@ -46,7 +46,7 @@ public class AdminController {
 		model.addAttribute("usersList", userList);
 		return "AdminUser";
 	}
-	
+
 	@GetMapping("/posts")
 	public String getPostList(Model model) {
 		List<Post> postList = adminService.getPostList();
@@ -72,13 +72,13 @@ public class AdminController {
 		redirectAttributes.addFlashAttribute("successMessage", "사용자 정보가 업데이트되었습니다.");
 		return "redirect:/admin/users";
 	}
-	
+
 	@PostMapping("/users/delete/{userId}")
 	public String deleteUser(@PathVariable Integer userId) {
 		adminService.deleteUserByUserId(userId);
 		return "redirect:/admin/users";
 	}
-	
+
 	@PostMapping("/posts/delete/{postId}")
 	public String deletePost(@PathVariable Integer postId) {
 		adminService.deleteCommentByPostId(postId);
@@ -92,7 +92,7 @@ public class AdminController {
 		redirectAttributes.addFlashAttribute("message", "모든 데이터가 삭제되었습니다.");
 		return "redirect:/admin/dashboard";
 	}
-	
+
 	@PostMapping("/insertSampleData")
 	public String insertSampleData(RedirectAttributes redirectAttributes) {
 		adminService.insertSampleData();

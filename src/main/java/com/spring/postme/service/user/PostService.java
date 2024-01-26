@@ -43,7 +43,7 @@ public class PostService implements PostServiceImpl {
 			postMapper.updatePost(post);
 		}
 	}
-	
+
 	@Override
 	public void updatePost(Integer id, Post post) {
 		post.setId(id);
@@ -78,5 +78,5 @@ public class PostService implements PostServiceImpl {
 	public void updatePost(Post post) {
 		postMapper.updatePost(post);
 	}
-	
+
 }

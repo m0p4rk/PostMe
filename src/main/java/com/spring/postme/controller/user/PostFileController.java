@@ -23,53 +23,48 @@ import com.spring.postme.service.user.PostFileService;
 
 @Controller
 public class PostFileController {
-	
+
 	@Autowired
 	private PostFileService fileService;
-	
+
 	@GetMapping(value = "/download/file/{fileId}")
 	public ResponseEntity<Resource> downloadFile(@PathVariable int fileId) {
-		
+
 		PostFile attachmentFile = null;
 		Resource resource = null;
 		try {
 			attachmentFile = fileService.getAttachmentFileByFileId(fileId);
-//			System.out.println(attachmentFile);
 			Path path = Paths.get(attachmentFile.getFilepath() + "\\" + attachmentFile.getFilename());
 			resource = new InputStreamResource(Files.newInputStream(path));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-		headers.setContentDisposition(ContentDisposition
-											.builder("attachment")
-											.filename(attachmentFile.getFilename())
-											.build());
-		
+		headers.setContentDisposition(
+				ContentDisposition.builder("attachment").filename(attachmentFile.getFilename()).build());
+
 		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
-	
-	
+
 	@ResponseBody
 	@DeleteMapping(value = "/file/{fileId}")
 	public String deleteFileByFileNo(@PathVariable int fileId) throws Exception {
 		boolean result = false;
 		String resultCode = "";
-		
+
 		result = fileService.deleteAttachmentFileByFileNo(fileId);
 		System.out.println(result);
 		if (result) {
 			System.out.println("성공");
 			resultCode = "S000";
-		}else {
+		} else {
 			System.out.println("실패");
 			resultCode = "F000";
 		}
-		
+
 		return resultCode;
 	}
-	
-	
+
 }

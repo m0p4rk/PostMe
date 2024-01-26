@@ -10,34 +10,34 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/comments")
 public class CommentController {
 
-    private final CommentService commentService;
+	private final CommentService commentService;
 
-    @Autowired
-    public CommentController(CommentService commentService) {
-        this.commentService = commentService;
-    }
+	@Autowired
+	public CommentController(CommentService commentService) {
+		this.commentService = commentService;
+	}
 
-    @PostMapping("/add")
-    public String addComment(Comment comment) {
-        commentService.addComment(comment);
-        return "redirect:/posts/" + comment.getPostId(); 
-    }
+	@PostMapping("/add")
+	public String addComment(Comment comment) {
+		commentService.addComment(comment);
+		return "redirect:/posts/" + comment.getPostId();
+	}
 
-    @GetMapping("/{id}")
-    public Comment getComment(@PathVariable Integer id) {
-        return commentService.getCommentById(id);
-    }
+	@GetMapping("/{id}")
+	public Comment getComment(@PathVariable Integer id) {
+		return commentService.getCommentById(id);
+	}
 
-    @PostMapping("/update/{id}")
-    public String updateComment(@PathVariable("id") int commentId, Comment comment) {
-        comment.setId(commentId);
-        commentService.updateComment(comment);
-        return "redirect:/posts/" + comment.getPostId();
-    }
+	@PostMapping("/update/{id}")
+	public String updateComment(@PathVariable("id") int commentId, Comment comment) {
+		comment.setId(commentId);
+		commentService.updateComment(comment);
+		return "redirect:/posts/" + comment.getPostId();
+	}
 
-    @GetMapping("/delete/{id}")
-    public String deleteComment(@PathVariable Integer id, @RequestParam Integer postId) {
-        commentService.deleteComment(id);
-        return "redirect:/posts/" + postId; 
-    }
+	@GetMapping("/delete/{id}")
+	public String deleteComment(@PathVariable Integer id, @RequestParam Integer postId) {
+		commentService.deleteComment(id);
+		return "redirect:/posts/" + postId;
+	}
 }

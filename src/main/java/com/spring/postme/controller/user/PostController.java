@@ -79,36 +79,29 @@ public class PostController {
 
 	@GetMapping("/posts/delete/{postId}")
 	public String deletePost(@PathVariable("postId") Integer postId) {
-		// 게시글 삭제 로직 구현
 		postService.deletePost(postId);
 
-		// 삭제 후 메인 페이지로 리디렉션
 		return "redirect:/";
 	}
 
 	@PostMapping("/posts/update/{id}")
-	public String updatePost(@PathVariable("id") Integer id, 
-	                         @ModelAttribute Post post,
-	                         @RequestParam("file") MultipartFile file, // 파일 파라미터 추가
-	                         RedirectAttributes redirectAttributes, 
-	                         HttpSession session) {
+	public String updatePost(@PathVariable("id") Integer id, @ModelAttribute Post post,
+			@RequestParam("file") MultipartFile file, // 파일 파라미터 추가
+			RedirectAttributes redirectAttributes, HttpSession session) {
 
-	    Integer userId = (Integer) session.getAttribute("loggedInUserId");
-	    post.setId(id);
-	    post.setUserId(userId);
+		Integer userId = (Integer) session.getAttribute("loggedInUserId");
+		post.setId(id);
+		post.setUserId(userId);
 
-	    // 기존 파일이 있으면 삭제
-	    postFileService.deleteFileByPostId(id);
+		postFileService.deleteFileByPostId(id);
 
-	    // 새 파일이 있으면 저장
-	    if (!file.isEmpty()) {
-	        postFileService.insertAttachmentFile(file, id, userId);
-	    }
+		if (!file.isEmpty()) {
+			postFileService.insertAttachmentFile(file, id, userId);
+		}
 
-	    postService.updatePost(post);
-	    redirectAttributes.addFlashAttribute("successMessage", "게시글이 수정되었습니다.");
-	    return "redirect:/posts/" + id;
+		postService.updatePost(post);
+		redirectAttributes.addFlashAttribute("successMessage", "게시글이 수정되었습니다.");
+		return "redirect:/posts/" + id;
 	}
-
 
 }
