@@ -91,7 +91,7 @@
 						<span>${pageNum}</span>
 					</c:when>
 					<c:otherwise>
-						<a href="?page=${pageNum}">${pageNum}</a>
+						<a href="?query=${query}&page=${pageNum}">${pageNum}</a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
