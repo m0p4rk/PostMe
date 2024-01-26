@@ -48,7 +48,7 @@
 				<div class="comment">
 					<p>${comment.content}</p>
 					<small>작성자: ${comment.userId}, 작성일: ${comment.createdAt}</small>
-					<c:if test="${comment.userId == sessionScope.loggedInUserId}">
+					<c:if test="${comment.userId == sessionScope.loggedInUserId or sessionScope.isAdmin}">
 						<!-- 댓글 수정 및 삭제 버튼 -->
 						<button class="btn btn-primary btn-sm" data-toggle="modal"
 							data-target="#editCommentModal-${comment.id}">수정</button>
