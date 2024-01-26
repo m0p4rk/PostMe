@@ -61,7 +61,7 @@
 <body>
 	<jsp:include page="navbar.jsp" />
 	<div class="container">
-		<h2>Searched</h2>
+		<h2>Searched - ${param.query}</h2>
 		<form action="/posts/search" method="get">
 			<div class="input-group mb-3">
 				<input type="text" class="form-control" placeholder="검색어 입력"
