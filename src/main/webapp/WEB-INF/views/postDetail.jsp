@@ -62,7 +62,7 @@
 
 			<!-- 댓글 작성 폼 -->
 			<form action="${pageContext.request.contextPath}/comments/add"
-				method="post" class="mt-3">
+				method="post" class="mt-3" id=PostCommentForm onsubmit="return validatePostCommentForm()">
 				<textarea name="content" class="form-control"
 					placeholder="댓글을 입력하세요"></textarea>
 				<input type="hidden" name="postId" value="${post.id}"> <input
@@ -87,7 +87,8 @@
 				<div class="modal-body">
 					<form
 						action="${pageContext.request.contextPath}/posts/update/${post.id}"
-						method="post" enctype="multipart/form-data">
+						id="editPostForm" method="post" enctype="multipart/form-data"
+						 onsubmit="return validatePostForm()">
 						<input type="text" class="form-control mb-2" name="title"
 							value="${post.title}">
 						<textarea class="form-control" name="content">${post.content}</textarea>
@@ -123,7 +124,7 @@
 						<div class="modal-body">
 							<form
 								action="${pageContext.request.contextPath}/comments/update/${comment.id}"
-								method="post">
+								method="post" id="editCommentForm" onsubmit="return validateEditCommentForm()" >
 								<textarea class="form-control" name="content">${comment.content}</textarea>
 								<input type="hidden" name="postId" value="${post.id}">
 								<button type="submit" class="btn btn-primary mt-2">저장</button>
@@ -137,5 +138,32 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script>
+	function validateEditCommentForm() {
+        var editcommentField = document.querySelector('#editCommentForm textarea[name="content"]');
+        if (editcommentField.value.trim() === '') {
+            alert('댓글을 입력하세요.');
+            return false;
+        }
+        return true;
+    }
+    function validatePostForm() {
+        var titleField = document.querySelector('#editPostForm input[name="title"]');
+        var contentField = document.querySelector('#editPostForm textarea[name="content"]');
+        if (titleField.value.trim() === '' || contentField.value.trim() === '') {
+            alert('제목과 내용을 입력하세요.');
+            return false;
+        }
+        return true;
+    }
+    function validatePostCommentForm() {
+        var commentField = document.querySelector('#PostCommentForm textarea[name="content"]');
+        if (commentField.value.trim() === '') {
+            alert('댓글을 입력하세요.');
+            return false;
+        }
+        return true;
+    }
+	</script>	
 </body>
 </html>
