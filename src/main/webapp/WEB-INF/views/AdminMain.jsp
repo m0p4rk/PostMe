@@ -7,7 +7,17 @@
     <title>PostMe-Admin</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        .sidebar {
+            position: fixed;
+            top: 0; /* 상단에 고정 */
+            left: 0; /* 왼쪽에 고정 */
+            width: 250px; /* 너비 설정 */
+            height: 100%; /* 전체 높이 */
+            /* 기타 스타일 */
+        }
+
         .dashboard-container {
+        	margin-left: 250px;
             flex-grow: 1; 
             background-color: #f8f8f8;
             padding: 20px;

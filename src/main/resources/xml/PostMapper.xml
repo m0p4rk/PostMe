@@ -35,7 +35,7 @@
 	</update>
 
 	<!-- ID로 게시글 삭제 -->
-	<delete id="deleteById" parameterType="java.lang.Integer">
+	<delete id="deleteByPostId" parameterType="java.lang.Integer">
 		DELETE FROM Posts WHERE id
 		= #{id}
 	</delete>

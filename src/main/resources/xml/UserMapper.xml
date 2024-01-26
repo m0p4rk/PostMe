@@ -33,34 +33,40 @@
 		SELECT * FROM users WHERE id = #{id}
 	</select>
 
-	<!-- 사용자 추가 -->
+	<!-- 사용자 추가 / Admin 처리는 불가함 -->
 	<insert id="insertUser"
 		parameterType="com.spring.postme.model.User">
-		INSERT INTO users (username, password, name, email,
-		is_admin, created_at)
+		INSERT INTO users (username, password, name, email
+		)
 		VALUES (#{username}, #{password}, #{name},
-		#{email}, #{isAdmin},
-		#{createdAt})
+		#{email}
+		)
 	</insert>
 
-	<!-- 사용자 정보 업데이트 -->
+	<insert id="insertAdmin"
+		parameterType="com.spring.postme.model.User">
+		INSERT INTO users (username, password, name, email, isAdmin)
+		VALUES (#{username}, #{password}, #{name}, #{email}, true)
+	</insert>
+
+	<!-- 사용자 정보 업데이트 / Admin 처리는 불가함 -->
 	<update id="updateUser"
 		parameterType="com.spring.postme.model.User">
 		UPDATE users
 		SET
 		username = #{username},
-		password = #{password},
+		password =
+		#{password},
 		name = #{name},
 		email = #{email}
-		isAdmin = #{isAdmin}
 		WHERE id = #{id}
 	</update>
 
-
 	<!-- ID로 사용자 삭제 -->
-	<delete id="deleteById" parameterType="int">
-		DELETE FROM users WHERE id
-		= #{id}
+	<delete id="deleteUserById" parameterType="int">
+		DELETE FROM users
+		WHERE id
+		= #{userId}
 	</delete>
 
 	<!-- 모든 사용자의 수 조회 -->
@@ -71,18 +77,22 @@
 	<delete id="deleteAllUsers">
 		DELETE FROM users
 	</delete>
-	 <select id="getUserById" parameterType="java.lang.Integer" resultType="com.spring.postme.model.User">
-        SELECT * FROM users WHERE id = #{userId}
-    </select>
-    
-  	<select id="getUserList" resultType="com.spring.postme.model.User">
-        SELECT * FROM users
-    </select>
-    
-    <!-- 사용자의 관리자 상태 업데이트 -->
-    <update id="updateUserAdminStatus">
-        UPDATE users
-        SET isAdmin = #{adminStatus}
-        WHERE id = #{userId}
-    </update>
+
+	<select id="getUserById" parameterType="java.lang.Integer"
+		resultType="com.spring.postme.model.User">
+		SELECT * FROM users WHERE id = #{userId}
+	</select>
+
+	<select id="getUserList"
+		resultType="com.spring.postme.model.User">
+		SELECT * FROM users
+	</select>
+
+	<!-- 사용자의 관리자 상태 업데이트 -->
+	<update id="updateUserAdminStatus">
+		UPDATE users
+		SET isAdmin = #{adminStatus}
+		WHERE id =
+		#{userId}
+	</update>
 </mapper>

@@ -48,7 +48,8 @@
 	</delete>
 
 	<delete id="deleteByPostId" parameterType="int">
-		DELETE FROM postfiles WHERE postId = #{postId}
+		DELETE FROM postfiles
+		WHERE postId = #{postId}
 	</delete>
 
 </mapper>

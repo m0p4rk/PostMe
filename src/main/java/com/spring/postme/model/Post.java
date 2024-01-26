@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 public class Post {
 
     private Integer id;
-    private Integer noticeNum;
     private Integer userId;
     private String title;
     private String content;
@@ -22,7 +21,6 @@ public class Post {
 	public Post(Integer id, Integer noticeNum, Integer userId, String title, String content, LocalDateTime createdAt,
 			LocalDateTime modifiedAt) {
 		this.id = id;
-		this.noticeNum = noticeNum;
 		this.userId = userId;
 		this.title = title;
 		this.content = content;

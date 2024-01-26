@@ -57,7 +57,7 @@ public class PostService implements PostServiceImpl {
 		commentMapper.deleteByPostId(postId);
 
 		// 그 다음 게시글 삭제
-		postMapper.deleteById(postId);
+		postMapper.deleteByPostId(postId);
 	}
 
 	@Override

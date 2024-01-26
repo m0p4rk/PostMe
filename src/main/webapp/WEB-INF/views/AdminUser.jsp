@@ -9,10 +9,18 @@
 <link
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	rel="stylesheet">
-<!-- 추가된 스타일 -->
 <style>
-/* 기존 스타일 */
+.sidebar {
+	position: fixed;
+	top: 0; /* 상단에 고정 */
+	left: 0; /* 왼쪽에 고정 */
+	width: 250px; /* 너비 설정 */
+	height: 100%; /* 전체 높이 */
+	/* 기타 스타일 */
+}
+
 .user-management-container {
+	margin-left: 250px;
 	flex-grow: 1;
 	background-color: #f8f8f8;
 	padding: 20px;
@@ -33,7 +41,7 @@
 .user-details {
 	flex-grow: 1;
 }
-/* 페이지네이션 관련 스타일 */
+
 #pagination {
 	display: flex;
 	justify-content: center;
@@ -59,7 +67,7 @@
 	background-color: #007bff;
 	color: white;
 }
-/* 모달 관련 추가 스타일 */
+
 .modal-content {
 	padding: 20px;
 }
@@ -73,22 +81,20 @@
 			<c:forEach items="${usersList}" var="user" varStatus="status">
 				<div class="user-container">
 					<div class="user-details">
+						<p>아이디: ${user.username}</p>
 						<p>이름: ${user.name}</p>
 						<p>이메일: ${user.email}</p>
 					</div>
 					<div>
-						<!-- 수정 버튼: 모달 트리거 -->
 						<button class="btn btn-primary" data-toggle="modal"
 							data-target="#editUserModal-${user.id}">수정</button>
-						<!-- 삭제 버튼 -->
-						<a href="/admin/users/delete/${user.id}" class="btn btn-danger">삭제</a>
-						<!-- 관리자 승격 체크 버튼 -->
+						<button class="btn btn-danger"
+							onclick="deleteUser('${user.id}')">삭제</button>
 						<input type="checkbox" id="adminCheck-${user.id}"
 							${user.isAdmin ? 'checked' : ''}
 							onclick="confirmAdminPromotion(${user.id})"> 관리자
 					</div>
 				</div>
-				<!-- 사용자 수정 모달 -->
 				<div class="modal fade" id="editUserModal-${user.id}" tabindex="-1"
 					role="dialog" aria-labelledby="editUserModalLabel-${user.id}"
 					aria-hidden="true">
@@ -163,6 +169,21 @@
 	        checkBox.checked = !checkBox.checked;
 	    }
 	}
-    </script>
+	function deleteUser(userId) {
+	    if(confirm('이 사용자를 삭제하시겠습니까?')) {
+	        $.ajax({
+	            url: '/admin/users/delete/' + userId,
+	            type: 'POST',
+	            success: function(response) {
+	                alert('사용자가 삭제되었습니다.');
+	                location.reload();
+	            },
+	            error: function(error) {
+	                alert('오류가 발생했습니다.');
+	            }
+	        });
+	    }
+	}
+	</script>
 </body>
 </html>

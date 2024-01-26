@@ -13,9 +13,13 @@ public interface UserMapper {
 
 	void insertUser(User newUser);
 	
+	void insertAdmin(User newAdmin);
+	
 	int countUsers();
 
     int deleteAllUsers();
+    
+    void deleteUserById(@Param("userId") Integer userId);
     
 	List<User> getUserList();
 

@@ -28,17 +28,19 @@
 		<div class="post-detail-container">
 			<h3>${post.title}</h3>
 			<p>${post.content}</p>
-			<p><strong>첨부파일 : </strong><a href="/download/file/${fileInfo.id}">${fileInfo.filename}</a></p>
-			<small>작성자: ${post.userId}</small>
-			<small>작성일: ${post.createdAt}</small>
-			<c:if test="${post.userId == sessionScope.loggedInUserId}">
+			<p>
+				<strong>첨부파일 : </strong><a href="/download/file/${fileInfo.id}">${fileInfo.filename}</a>
+			</p>
+			<small>작성자: ${post.userId}</small> <small>작성일:
+				${post.createdAt}</small>
+			<c:if
+				test="${post.userId == sessionScope.loggedInUserId or sessionScope.isAdmin}">
 				<button class="btn btn-primary btn-sm" data-toggle="modal"
 					data-target="#editPostModal">수정</button>
 				<a href="${pageContext.request.contextPath}/posts/delete/${post.id}"
 					class="btn btn-danger btn-sm">삭제</a>
 			</c:if>
 		</div>
-
 		<!-- 댓글 섹션 -->
 		<div class="comments-section">
 			<h5>댓글</h5>
@@ -88,9 +90,10 @@
 						<input type="text" class="form-control mb-2" name="title"
 							value="${post.title}">
 						<textarea class="form-control" name="content">${post.content}</textarea>
-							<div class="form-group">
-				                <input type="file" class="form-control-file" id="file" name="file">
-				            </div>
+						<div class="form-group">
+							<input type="file" class="form-control-file" id="file"
+								name="file">
+						</div>
 						<button type="submit" class="btn btn-primary mt-2">저장</button>
 					</form>
 				</div>

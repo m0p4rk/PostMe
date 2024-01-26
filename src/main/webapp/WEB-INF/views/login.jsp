@@ -45,12 +45,12 @@ body {
 </style>
 </head>
 <body>
-<%
-response.setHeader("Pragma", "no-cache"); 
-response.setHeader("Cache-Control", "no-cache"); 
-response.setHeader("Cache-Control", "no-store"); 
-response.setDateHeader("Expires", 0L); 
-%>
+	<%
+		response.setHeader("Pragma", "no-cache");
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0L);
+	%>
 
 
 	<div class="container">
@@ -76,19 +76,16 @@ response.setDateHeader("Expires", 0L);
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script>
-		// Spring Framework에서 전달한 FlashAttribute인 'error'를 JavaScript로 받기
 		let error = "${flash.error}";
 
-		// JavaScript로 받은 에러 메시지를 HTML 요소에 표시
 		let errorMessageElement = document.getElementById("error-message");
 		errorMessageElement.innerHTML = error;
 	</script>
-<script>
-    // Clear browser history on logout to prevent back button from showing cached content
-    history.pushState(null, null, location.href);
-    window.onpopstate = function () {
-        history.go(1);
-    };
-</script>
+	<script>
+		history.pushState(null, null, location.href);
+		window.onpopstate = function() {
+			history.go(1);
+		};
+	</script>
 </body>
 </html>

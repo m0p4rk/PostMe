@@ -12,5 +12,4 @@ public interface AdminServiceImpl {
 	void deleteAllPosts();
 
 	void deleteAllComments();
-
 }
