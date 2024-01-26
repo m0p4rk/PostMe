@@ -51,6 +51,20 @@ public class PostController {
 		return "main";
 	}
 
+	@GetMapping("/posts/search")
+	public String searchPosts(@RequestParam String query, @RequestParam(value = "page", defaultValue = "1") int page,
+			Model model) {
+		List<Post> searchResults = postService.findSearchedPostsByPage(page, POSTS_PER_PAGE, query);
+		int totalPosts = postService.searchPostsCount(query);
+		int totalPages = (int) Math.ceil((double) totalPosts / POSTS_PER_PAGE);
+
+		model.addAttribute("posts", searchResults);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", totalPages);
+
+		return "postListView";
+	}
+
 	@GetMapping("/posts/{id}")
 	public String showPostDetail(@PathVariable Integer id, Model model) {
 		Post post = postService.findById(id);
@@ -102,12 +116,4 @@ public class PostController {
 		redirectAttributes.addFlashAttribute("successMessage", "게시글이 수정되었습니다.");
 		return "redirect:/posts/" + id;
 	}
-
-	@GetMapping("/posts/search")
-	public String searchPosts(@RequestParam String query, Model model) {
-		List<Post> searchResults = postService.searchPosts(query);
-		model.addAttribute("posts", searchResults);
-		return "postListView";
-	}
-
 }

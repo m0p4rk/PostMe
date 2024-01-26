@@ -61,13 +61,22 @@
 <body>
 	<jsp:include page="navbar.jsp" />
 	<div class="container">
+		<form action="/posts/search" method="get">
+			<div class="input-group mb-3">
+				<input type="text" class="form-control" placeholder="검색어 입력"
+					name="query">
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" type="submit">검색</button>
+				</div>
+			</div>
+		</form>
 		<c:choose>
 			<c:when test="${not empty posts}">
 				<c:forEach items="${posts}" var="post">
 					<div class="post-preview"
 						onclick="location.href='/posts/${post.id}'">
 						<h3>${post.title}</h3>
-						<p>${fn:substring(post.content, 0, 100)}...</p>
+						<p>${fn:substring(post.content, 0, 10)}...</p>
 					</div>
 				</c:forEach>
 			</c:when>
@@ -75,7 +84,6 @@
 				<div class="empty-post">게시글이 없습니다.</div>
 			</c:otherwise>
 		</c:choose>
-
 		<nav id="pagination">
 			<c:forEach begin="1" end="${totalPages}" var="pageNum">
 				<c:choose>

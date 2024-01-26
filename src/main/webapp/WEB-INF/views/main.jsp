@@ -92,7 +92,6 @@
 				<div class="empty-post">검색 결과가 없습니다.</div>
 			</c:otherwise>
 		</c:choose>
-		<%-- 페이지네이션 --%>
 		<nav id="pagination">
 			<c:forEach begin="1" end="${totalPages}" var="pageNum">
 				<c:choose>

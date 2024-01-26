@@ -48,6 +48,32 @@
 		#{pageSize}
 	</select>
 
+	<select id="findSearchedPostsByPage" parameterType="map"
+		resultType="com.spring.postme.model.Post">
+		SELECT * FROM Posts
+		WHERE title LIKE CONCAT('%', #{query},
+		'%')
+		OR content LIKE CONCAT('%', #{query}, '%') ORDER BY id DESC LIMIT
+		#{offset},
+		#{pageSize}
+	</select>
+
+	<select id="searchPosts" parameterType="String"
+		resultType="com.spring.postme.model.Post">
+		SELECT * FROM Posts
+		WHERE title LIKE CONCAT('%', #{query},
+		'%')
+		OR content LIKE CONCAT('%', #{query}, '%')
+	</select>
+
+	<select id="searchPostsCount" parameterType="String"
+		resultType="int">
+		SELECT COUNT(*) FROM Posts
+		WHERE title LIKE CONCAT('%',
+		#{query}, '%')
+		OR content LIKE CONCAT('%', #{query}, '%')
+	</select>
+
 	<!-- 전체 게시글 수 조회 -->
 	<select id="countPosts" resultType="int">
 		SELECT COUNT(*) FROM Posts
@@ -56,11 +82,5 @@
 	<delete id="deleteAllPosts">
 		DELETE FROM posts
 	</delete>
-	
-	<select id="searchPosts" parameterType="String" resultType="com.spring.postme.model.Post">
-        SELECT * FROM Posts
-        WHERE title LIKE CONCAT('%', #{query}, '%')
-        OR content LIKE CONCAT('%', #{query}, '%')
-    </select>
 
 </mapper>
