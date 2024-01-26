@@ -105,7 +105,7 @@ response.setDateHeader("Expires", 0L); //현재 응답 결과의 만료일 설�
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script>
-		function h&&lePostClick(postId) {
+		function handlePostClick(postId) {
 			window.location.href = '/posts/' + postId;
 		}
 	</script>

@@ -103,7 +103,7 @@
 
 	<!-- 댓글 수정 모달 -->
 	<c:forEach items="${commentsList}" var="comment">
-		<c:if test="${comment.userId == sessionScope.loggedInUserId}">
+		<c:if test="${comment.userId == sessionScope.loggedInUserId or sessionScope.isAdmin}">
 			<div class="modal fade" id="editCommentModal-${comment.id}"
 				tabindex="-1" role="dialog"
 				aria-labelledby="editCommentModalLabel-${comment.id}"
@@ -132,9 +132,7 @@
 			</div>
 		</c:if>
 	</c:forEach>
-
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
