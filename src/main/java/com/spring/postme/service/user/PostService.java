@@ -16,85 +16,92 @@ import com.spring.postme.service.impl.PostServiceImpl;
 @Service
 public class PostService implements PostServiceImpl {
 
-	private final PostMapper postMapper;
-	private final CommentMapper commentMapper;
+    private final PostMapper postMapper;
+    private final CommentMapper commentMapper;
 
-	@Autowired
-	public PostService(PostMapper postMapper, CommentMapper commentMapper) {
-		this.postMapper = postMapper;
-		this.commentMapper = commentMapper;
-	}
+    @Autowired
+    public PostService(PostMapper postMapper, CommentMapper commentMapper) {
+        this.postMapper = postMapper;
+        this.commentMapper = commentMapper;
+    }
 
-	@Override
-	public List<Post> findAll() {
-		return postMapper.findAll();
-	}
+    // Create
+    @Override
+    public void savePost(Post post) {
+        if (post.getId() == null) {
+            postMapper.insertPost(post);
+        } else {
+            postMapper.updatePost(post);
+        }
+    }
 
-	@Override
-	public Post findById(Integer id) {
-		return postMapper.findById(id);
-	}
+    // Read
+    @Override
+    public List<Post> findAll() {
+        return postMapper.findAll();
+    }
 
-	@Override
-	public void savePost(Post post) {
-		if (post.getId() == null) {
-			postMapper.insertPost(post);
-		} else {
-			postMapper.updatePost(post);
-		}
-	}
+    @Override
+    public Post findById(Integer id) {
+        return postMapper.findById(id);
+    }
 
-	@Override
-	public void updatePost(Integer id, Post post) {
-		post.setId(id);
-		postMapper.updatePost(post);
-	}
+    @Override
+    public List<Post> findPostsByPage(int page, int pageSize) {
+        return getPagedPosts(page, pageSize, null);
+    }
 
-	@Override
-	@Transactional
-	public void deletePost(Integer postId) {
-		commentMapper.deleteByPostId(postId);
+    @Override
+    public List<Post> findSearchedPostsByPage(int page, int pageSize, String query) {
+        return getPagedPosts(page, pageSize, query);
+    }
 
-		postMapper.deleteByPostId(postId);
-	}
+    @Override
+    public List<Post> searchPosts(String query) {
+        return postMapper.searchPosts(query);
+    }
 
-	@Override
-	public List<Post> findPostsByPage(int page, int pageSize) {
-		int offset = (page - 1) * pageSize;
-		Map<String, Object> params = new HashMap<>();
-		params.put("offset", offset);
-		params.put("pageSize", pageSize);
-		return postMapper.findPostsByPage(params);
-	}
+    @Override
+    public int countPosts() {
+        return postMapper.countPosts();
+    }
 
-	@Override
-	public List<Post> findSearchedPostsByPage(int page, int pageSize, String query) {
-		int offset = (page - 1) * pageSize;
-		Map<String, Object> params = new HashMap<>();
-		params.put("query", query);
-		params.put("offset", offset);
-		params.put("pageSize", pageSize);
-		return postMapper.findSearchedPostsByPage(params);
-	}
+    @Override
+    public int searchPostsCount(String query) {
+        return postMapper.searchPostsCount(query);
+    }
 
-	@Override
-	public int countPosts() {
-		return postMapper.countPosts();
-	}
+    // Update
+    @Override
+    public void updatePost(Integer id, Post post) {
+        post.setId(id);
+        postMapper.updatePost(post);
+    }
 
-	@Override
-	public void updatePost(Post post) {
-		postMapper.updatePost(post);
-	}
+    @Override
+    public void updatePost(Post post) {
+        postMapper.updatePost(post);
+    }
 
-	@Override
-	public List<Post> searchPosts(String query) {
-		return postMapper.searchPosts(query);
-	}
-
-	@Override
-	public int searchPostsCount(String query) {
-		return postMapper.searchPostsCount(query);
-	}
-
+    // Delete
+    @Override
+    @Transactional
+    public void deletePost(Integer postId) {
+        commentMapper.deleteByPostId(postId);
+        postMapper.deleteByPostId(postId);
+    }
+    
+    // Extracted Method
+    private List<Post> getPagedPosts(int page, int pageSize, String query) {
+        int offset = (page - 1) * pageSize;
+        Map<String, Object> params = new HashMap<>();
+        params.put("offset", offset);
+        params.put("pageSize", pageSize);
+        if (query != null) {
+            params.put("query", query);
+            return postMapper.findSearchedPostsByPage(params);
+        } else {
+            return postMapper.findPostsByPage(params);
+        }
+    }
 }

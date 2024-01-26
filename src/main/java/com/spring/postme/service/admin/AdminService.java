@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,51 +23,17 @@ public class AdminService implements AdminServiceImpl {
     private final PostMapper postMapper;
     private final CommentMapper commentMapper;
     private final UserMapper userMapper;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public AdminService(PostMapper postMapper, CommentMapper commentMapper, UserMapper userMapper) {
+    public AdminService(PostMapper postMapper, CommentMapper commentMapper, UserMapper userMapper, JdbcTemplate jdbcTemplate) {
         this.postMapper = postMapper;
         this.commentMapper = commentMapper;
         this.userMapper = userMapper;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
-    @Override
-    public int countUsers() {
-        return userMapper.countUsers();
-    }
-
-    @Override
-    public void deleteAllUsers() {
-        userMapper.deleteAllUsers();
-    }
-
-    @Override
-    public int countPosts() {
-        return postMapper.countPosts();
-    }
-
-    @Override
-    public void deleteAllPosts() {
-        postMapper.deleteAllPosts();
-    }
-
-    @Override
-    public int countComments() {
-        return commentMapper.countComments();
-    }
-
-    @Override
-    public void deleteAllComments() {
-        commentMapper.deleteAllComments();
-    }
-
-    @Transactional
-    public void deleteAllData() {
-        deleteAllComments();
-        deleteAllPosts();
-        deleteAllUsers();
-    }
-
+    // User 
     public List<User> getUserList() {
         return userMapper.getUserList();
     }
@@ -87,6 +54,7 @@ public class AdminService implements AdminServiceImpl {
         userMapper.deleteUserById(userId);
     }
 
+    // Post 
     public List<Post> getPostList() {
         return postMapper.findAll();
     }
@@ -95,10 +63,51 @@ public class AdminService implements AdminServiceImpl {
         postMapper.deleteByPostId(postId);
     }
 
+    // Comment 
     public void deleteCommentByPostId(Integer postId) {
         commentMapper.deleteByPostId(postId);
     }
 
+    // READ - COUNT
+    @Override
+    public int countUsers() {
+        return userMapper.countUsers();
+    }
+
+    @Override
+    public int countPosts() {
+        return postMapper.countPosts();
+    }
+
+    @Override
+    public int countComments() {
+        return commentMapper.countComments();
+    }
+
+    // DELETE
+    @Override
+    public void deleteAllUsers() {
+        userMapper.deleteAllUsers();
+    }
+
+    @Override
+    public void deleteAllPosts() {
+        postMapper.deleteAllPosts();
+    }
+
+    @Override
+    public void deleteAllComments() {
+        commentMapper.deleteAllComments();
+    }
+
+    @Transactional
+    public void deleteAllData() {
+        deleteAllComments();
+        deleteAllPosts();
+        deleteAllUsers();
+    }
+
+    // SAMPLE DATA
     @Transactional
     public void insertSampleData() {
         insertSampleUsers();
@@ -122,7 +131,6 @@ public class AdminService implements AdminServiceImpl {
         String username = (index == 1) ? "admin" : "user" + index;
         String email = (index == 1) ? "admin@example.com" : "user" + index + "@example.com";
         boolean isAdmin = index == 1;
-
         return new User(null, username, hashedPassword, "User" + index, email, isAdmin, LocalDateTime.now());
     }
 
@@ -144,5 +152,16 @@ public class AdminService implements AdminServiceImpl {
             Comment comment = new Comment(null, i, i, "Sample comment " + i, LocalDateTime.now(), LocalDateTime.now());
             commentMapper.insertComment(comment);
         }
+    }
+
+    public void resetAllTables() {
+        resetAutoIncrement("users");
+        resetAutoIncrement("posts");
+        resetAutoIncrement("comments");
+    }
+
+    private void resetAutoIncrement(String tableName) {
+        String sql = "ALTER TABLE " + tableName + " AUTO_INCREMENT = 1";
+        jdbcTemplate.execute(sql);
     }
 }

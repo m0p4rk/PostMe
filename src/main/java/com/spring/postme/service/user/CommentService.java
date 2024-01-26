@@ -10,41 +10,44 @@ import com.spring.postme.service.impl.CommentServiceImpl;
 @Service
 public class CommentService implements CommentServiceImpl {
 
-	private final CommentMapper commentMapper;
+    private final CommentMapper commentMapper;
 
-	@Autowired
-	public CommentService(CommentMapper commentMapper) {
-		this.commentMapper = commentMapper;
-	}
+    @Autowired
+    public CommentService(CommentMapper commentMapper) {
+        this.commentMapper = commentMapper;
+    }
 
-	@Override
-	public void addComment(Comment comment) {
-		commentMapper.insertComment(comment);
-	}
+    // Create
+    @Override
+    public void addComment(Comment comment) {
+        commentMapper.insertComment(comment);
+    }
 
-	@Override
-	public List<Comment> getCommentsByPostId(Integer postId) {
-		return commentMapper.findCommentsByPostId(postId);
-	}
+    // Read
+    @Override
+    public List<Comment> getCommentsByPostId(Integer postId) {
+        return commentMapper.findCommentsByPostId(postId);
+    }
 
-	@Override
-	public Comment getCommentById(Integer id) {
-		return commentMapper.findCommentById(id);
-	}
+    @Override
+    public Comment getCommentById(Integer id) {
+        return commentMapper.findCommentById(id);
+    }
 
-	@Override
-	public void updateComment(Comment comment) {
-		commentMapper.updateComment(comment);
-	}
+    @Override
+    public int countComments() {
+        return commentMapper.countComments();
+    }
 
-	@Override
-	public void deleteComment(Integer id) {
-		commentMapper.deleteComment(id);
-	}
+    // Update
+    @Override
+    public void updateComment(Comment comment) {
+        commentMapper.updateComment(comment);
+    }
 
-	@Override
-	public int countComments() {
-		return commentMapper.countComments();
-	}
-
+    // Delete
+    @Override
+    public void deleteComment(Integer id) {
+        commentMapper.deleteComment(id);
+    }
 }

@@ -8,30 +8,32 @@ import com.spring.postme.service.impl.UserServiceImpl;
 
 @Service
 public class UserService implements UserServiceImpl {
-	private final UserMapper userMapper;
+    private final UserMapper userMapper;
 
-	@Autowired
-	public UserService(UserMapper userMapper) {
-		this.userMapper = userMapper;
-	}
+    @Autowired
+    public UserService(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
-	public User getUserByUsername(String username) {
-		return userMapper.getUserByUsername(username);
-	}
+    // Read
+    public User getUserByUsername(String username) {
+        return userMapper.getUserByUsername(username);
+    }
 
-	public boolean insertUser(User newUser) {
-		try {
-			userMapper.insertUser(newUser); 
-			return true; 
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false; 
-		}
-	}
+    // Create
+    public boolean insertUser(User newUser) {
+        try {
+            userMapper.insertUser(newUser); 
+            return true; 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; 
+        }
+    }
 
-	@Override
-	public int countUsers() {
-		return userMapper.countUsers();
-	}
-
+    // Read
+    @Override
+    public int countUsers() {
+        return userMapper.countUsers();
+    }
 }

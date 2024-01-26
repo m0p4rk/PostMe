@@ -107,6 +107,7 @@ public class AdminController {
 
     @PostMapping("/insertSampleData")
     public String insertSampleData(RedirectAttributes redirectAttributes) {
+    	adminService.resetAllTables();
         adminService.insertSampleData();
         addRedirectMessage(redirectAttributes, "샘플 데이터가 추가되었습니다.");
 
