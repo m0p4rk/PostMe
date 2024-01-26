@@ -17,10 +17,14 @@ public interface PostServiceImpl {
 
 	List<Post> findPostsByPage(int page, int pageSize);
 
+	List<Post> findSearchedPostsByPage(int page, int pageSize, String query);
+
 	int countPosts();
 
 	void updatePost(Post post);
-	
+
 	List<Post> searchPosts(String query);
+
+	int searchPostsCount(String query);
 
 }

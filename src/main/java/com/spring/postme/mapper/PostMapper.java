@@ -29,4 +29,8 @@ public interface PostMapper {
 
 	List<Post> searchPosts(String query);
 
+	int searchPostsCount(String query);
+
+	List<Post> findSearchedPostsByPage(Map<String, Object> params);
+
 }

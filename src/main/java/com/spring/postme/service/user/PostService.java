@@ -68,6 +68,16 @@ public class PostService implements PostServiceImpl {
 	}
 
 	@Override
+	public List<Post> findSearchedPostsByPage(int page, int pageSize, String query) {
+		int offset = (page - 1) * pageSize;
+		Map<String, Object> params = new HashMap<>();
+		params.put("query", query);
+		params.put("offset", offset);
+		params.put("pageSize", pageSize);
+		return postMapper.findSearchedPostsByPage(params);
+	}
+
+	@Override
 	public int countPosts() {
 		return postMapper.countPosts();
 	}
@@ -80,6 +90,11 @@ public class PostService implements PostServiceImpl {
 	@Override
 	public List<Post> searchPosts(String query) {
 		return postMapper.searchPosts(query);
+	}
+
+	@Override
+	public int searchPostsCount(String query) {
+		return postMapper.searchPostsCount(query);
 	}
 
 }
