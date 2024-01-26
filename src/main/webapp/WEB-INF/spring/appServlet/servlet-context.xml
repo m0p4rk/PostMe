@@ -38,16 +38,20 @@
 			value="104857600" />
 	</beans:bean>
 	
-	<interceptors>
-		<interceptor> 					
-															
-			<mapping path="/admin/**"/> 										
-			<mapping path="/dashboard/**"/> 										
-			<mapping path="/comments/**"/> 										
-			<exclude-mapping path="/login"/>		
-			<exclude-mapping path="/main"/> 				
-			<beans:bean	id="firstInterceptor" class="com.spring.postme.global.interceptor.AuthInterceptor"/>	
-		</interceptor>
+		<interceptors>
+		    <interceptor> 
+		        <mapping path="/dashboard/**"/> 
+		        <mapping path="/comments/**"/> 
+		        <exclude-mapping path="/login"/> 
+		        <exclude-mapping path="/main"/> 
+		        <beans:bean id="firstInterceptor" class="com.spring.postme.global.interceptor.AuthInterceptor"/> 
+		    </interceptor>
 		
-	</interceptors>
+		    <interceptor> 
+		        <mapping path="/admin/**"/> 
+		        <exclude-mapping path="/login"/> 
+		        <exclude-mapping path="/main"/> 
+		        <beans:bean id="adminInterceptor" class="com.spring.postme.global.interceptor.AdminInterceptor"/> 
+		    </interceptor>
+		</interceptors>
 </beans:beans>
