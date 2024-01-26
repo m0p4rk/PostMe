@@ -86,8 +86,7 @@ public class PostController {
 
 	@PostMapping("/posts/update/{id}")
 	public String updatePost(@PathVariable("id") Integer id, @ModelAttribute Post post,
-			@RequestParam("file") MultipartFile file, // 파일 파라미터 추가
-			RedirectAttributes redirectAttributes, HttpSession session) {
+			@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes, HttpSession session) {
 
 		Integer userId = (Integer) session.getAttribute("loggedInUserId");
 		post.setId(id);
@@ -102,6 +101,13 @@ public class PostController {
 		postService.updatePost(post);
 		redirectAttributes.addFlashAttribute("successMessage", "게시글이 수정되었습니다.");
 		return "redirect:/posts/" + id;
+	}
+
+	@GetMapping("/posts/search")
+	public String searchPosts(@RequestParam String query, Model model) {
+		List<Post> searchResults = postService.searchPosts(query);
+		model.addAttribute("posts", searchResults);
+		return "postListView";
 	}
 
 }

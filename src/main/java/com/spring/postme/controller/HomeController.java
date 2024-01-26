@@ -15,7 +15,7 @@ public class HomeController {
 
 	@GetMapping("/main")
 	public String showMainPage() {
-		return "main"; // 'views' 폴더 내의 'main.jsp'를 가리킵니다.
+		return "main"; 
 	}
 
 	@GetMapping("/login")

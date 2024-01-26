@@ -27,4 +27,6 @@ public interface PostMapper {
 
 	int deleteAllPosts();
 
+	List<Post> searchPosts(String query);
+
 }

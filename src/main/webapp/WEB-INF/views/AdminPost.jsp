@@ -12,11 +12,10 @@
 <style>
 .sidebar {
 	position: fixed;
-	top: 0; /* 상단에 고정 */
-	left: 0; /* 왼쪽에 고정 */
-	width: 250px; /* 너비 설정 */
-	height: 100%; /* 전체 높이 */
-	/* 기타 스타일 */
+	top: 0;
+	left: 0;
+	width: 250px;
+	height: 100%;
 }
 
 .post-management-container {
@@ -70,12 +69,6 @@
 </style>
 </head>
 <body>
-	<%
-		response.setHeader("Pragma", "no-cache");
-	response.setHeader("Cache-Control", "no-cache");
-	response.setHeader("Cache-Control", "no-store");
-	response.setDateHeader("Expires", 0L);
-	%>
 	<div class="d-flex">
 		<jsp:include page="sidebar.jsp" />
 		<div class="post-management-container">
@@ -83,12 +76,12 @@
 			<c:choose>
 				<c:when test="${not empty postsList}">
 					<c:forEach items="${postsList}" var="post">
-						<div class="post-container">
+						<div class="post-container" id="post-container-${post.id}">
 							<div class="post-details">
 								<p>제목: ${post.title}</p>
 								<p>내용: ${post.content}</p>
 								<p>작성자: ${post.userId}</p>
-								<p>개시글 고유번호: ${post.id}</p>
+								<p>게시글 고유번호: ${post.id}</p>
 							</div>
 							<div>
 								<a href="#" onclick="deletePost(${post.id})"
@@ -101,18 +94,7 @@
 					<p>게시물이 없습니다.</p>
 				</c:otherwise>
 			</c:choose>
-
 			<nav id="pagination">
-				<c:forEach begin="1" end="${totalPages}" var="pageNum">
-					<c:choose>
-						<c:when test="${pageNum == currentPage}">
-							<span>${pageNum}</span>
-						</c:when>
-						<c:otherwise>
-							<a href="?page=${pageNum}">${pageNum}</a>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
 			</nav>
 		</div>
 	</div>
@@ -120,23 +102,24 @@
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script>
-		function deletePost(postId) {
-			var confirmDeletion = confirm('게시물을 삭제하시겠습니까?');
+        function deletePost(postId) {
+            var confirmDeletion = confirm('게시물을 삭제하시겠습니까?');
 
-			if (confirmDeletion) {
-				$.ajax({
-					url : '/admin/posts/delete/' + postId,
-					type : 'POST',
-					success : function(response) {
-						alert('게시물이 삭제되었습니다.');
-						location.reload();
-					},
-					error : function(error) {
-						alert('오류가 발생했습니다.');
-					}
-				});
-			}
-		}
-	</script>
+            if (confirmDeletion) {
+                $.ajax({
+                    url: '/admin/posts/delete/' + postId,
+                    type: 'POST',
+                    success: function(response) {
+                        $('#post-container-' + postId).fadeOut(500, function() {
+                            $(this).remove();
+                        });
+                    },
+                    error: function(error) {
+                        alert('오류가 발생했습니다.');
+                    }
+                });
+            }
+        }
+    </script>
 </body>
 </html>

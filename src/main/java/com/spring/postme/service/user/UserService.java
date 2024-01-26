@@ -21,11 +21,11 @@ public class UserService implements UserServiceImpl {
 
 	public boolean insertUser(User newUser) {
 		try {
-			userMapper.insertUser(newUser); // UserMapper를 통해 사용자 추가
-			return true; // 성공적으로 추가됨
+			userMapper.insertUser(newUser); 
+			return true; 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false; // 추가 실패
+			return false; 
 		}
 	}
 

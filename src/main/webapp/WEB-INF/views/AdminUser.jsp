@@ -12,11 +12,10 @@
 <style>
 .sidebar {
 	position: fixed;
-	top: 0; /* 상단에 고정 */
-	left: 0; /* 왼쪽에 고정 */
-	width: 250px; /* 너비 설정 */
-	height: 100%; /* 전체 높이 */
-	/* 기타 스타일 */
+	top: 0;
+	left: 0;
+	width: 250px;
+	height: 100%;
 }
 
 .user-management-container {

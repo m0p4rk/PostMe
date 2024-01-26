@@ -14,10 +14,8 @@ public class AdminInterceptor implements HandlerInterceptor {
 			throws Exception {
 		HttpSession session = request.getSession(false);
 
-		// 관리자인지 확인
 		if (session.getAttribute("isAdmin") == null || session.getAttribute("isAdmin").equals(false)
 				|| session.getAttribute("isAdmin").equals(0)) {
-			// 관리자가 아닌 경우 로그인 페이지로 리다이렉트
 			response.sendRedirect("/login");
 			return false;
 		}

@@ -20,5 +20,7 @@ public interface PostServiceImpl {
 	int countPosts();
 
 	void updatePost(Post post);
+	
+	List<Post> searchPosts(String query);
 
 }

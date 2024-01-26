@@ -53,10 +53,8 @@ public class PostService implements PostServiceImpl {
 	@Override
 	@Transactional
 	public void deletePost(Integer postId) {
-		// 먼저 해당 게시글의 모든 댓글 삭제
 		commentMapper.deleteByPostId(postId);
 
-		// 그 다음 게시글 삭제
 		postMapper.deleteByPostId(postId);
 	}
 
@@ -77,6 +75,11 @@ public class PostService implements PostServiceImpl {
 	@Override
 	public void updatePost(Post post) {
 		postMapper.updatePost(post);
+	}
+
+	@Override
+	public List<Post> searchPosts(String query) {
+		return postMapper.searchPosts(query);
 	}
 
 }

@@ -56,5 +56,11 @@
 	<delete id="deleteAllPosts">
 		DELETE FROM posts
 	</delete>
+	
+	<select id="searchPosts" parameterType="String" resultType="com.spring.postme.model.Post">
+        SELECT * FROM Posts
+        WHERE title LIKE CONCAT('%', #{query}, '%')
+        OR content LIKE CONCAT('%', #{query}, '%')
+    </select>
 
 </mapper>
