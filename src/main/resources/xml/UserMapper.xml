@@ -1,99 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.spring.postme.mapper.UserMapper">
 
-	<!-- 결과 매핑 정의 -->
-	<resultMap id="userResultMap"
-		type="com.spring.postme.model.User">
-		<id property="id" column="id" />
-		<result property="username" column="username" />
-		<result property="password" column="password" />
-		<result property="name" column="name" />
-		<result property="email" column="email" />
-		<result property="isAdmin" column="isAdmin" />
-		<result property="createdAt" column="createdAt" />
-	</resultMap>
+    <resultMap id="userResultMap" type="com.spring.postme.model.User">
+        <id property="id" column="id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="name" column="name" />
+        <result property="email" column="email" />
+        <result property="isAdmin" column="isAdmin" />
+        <result property="createdAt" column="createdAt" />
+    </resultMap>
 
-	<!-- 사용자 이름으로 사용자 조회 -->
-	<select id="getUserByUsername" parameterType="string"
-		resultMap="userResultMap">
-		SELECT * FROM users WHERE username = #{username}
-	</select>
+    <select id="getUserByUsername" parameterType="string" resultMap="userResultMap">
+        SELECT * FROM users WHERE username = #{username}
+    </select>
 
-	<!-- 모든 사용자 조회 -->
-	<select id="findAll" resultMap="userResultMap">
-		SELECT * FROM users
-	</select>
+    <select id="findAll" resultMap="userResultMap">
+        SELECT * FROM users
+    </select>
 
-	<!-- ID로 사용자 조회 -->
-	<select id="findById" parameterType="int"
-		resultMap="userResultMap">
-		SELECT * FROM users WHERE id = #{id}
-	</select>
+    <select id="findById" parameterType="int" resultMap="userResultMap">
+        SELECT * FROM users WHERE id = #{id}
+    </select>
 
-	<!-- 사용자 추가 / Admin 처리는 불가함 -->
-	<insert id="insertUser"
-		parameterType="com.spring.postme.model.User">
-		INSERT INTO users (username, password, name, email
-		)
-		VALUES (#{username}, #{password}, #{name},
-		#{email}
-		)
-	</insert>
+    <insert id="insertUser" parameterType="com.spring.postme.model.User">
+        INSERT INTO users (username, password, name, email)
+        VALUES (#{username}, #{password}, #{name}, #{email})
+    </insert>
 
-	<insert id="insertAdmin"
-		parameterType="com.spring.postme.model.User">
-		INSERT INTO users (username, password, name, email,
-		isAdmin)
-		VALUES (#{username}, #{password}, #{name}, #{email}, true)
-	</insert>
+    <insert id="insertAdmin" parameterType="com.spring.postme.model.User">
+        INSERT INTO users (username, password, name, email, isAdmin)
+        VALUES (#{username}, #{password}, #{name}, #{email}, true)
+    </insert>
 
-	<!-- 사용자 정보 업데이트 / Admin 처리는 불가함 -->
-	<update id="updateUser"
-		parameterType="com.spring.postme.model.User">
-		UPDATE users
-		SET
-		username = #{username},
-		password =
-		#{password},
-		name = #{name},
-		email = #{email}
-		WHERE id = #{id}
-	</update>
+    <update id="updateUser" parameterType="com.spring.postme.model.User">
+        UPDATE users SET username = #{username}, password = #{password}, name = #{name}, email = #{email}
+        WHERE id = #{id}
+    </update>
 
-	<!-- ID로 사용자 삭제 -->
-	<delete id="deleteUserById" parameterType="int">
-		DELETE FROM users
-		WHERE id
-		= #{userId}
-	</delete>
+    <delete id="deleteUserById" parameterType="int">
+        DELETE FROM users WHERE id = #{userId}
+    </delete>
 
-	<!-- 모든 사용자의 수 조회 -->
-	<select id="countUsers" resultType="int">
-		SELECT COUNT(*) FROM users
-	</select>
+    <select id="countUsers" resultType="int">
+        SELECT COUNT(*) FROM users
+    </select>
 
-	<delete id="deleteAllUsers">
-		DELETE FROM users
-	</delete>
+    <delete id="deleteAllUsers">
+        DELETE FROM users
+    </delete>
 
-	<select id="getUserById" parameterType="java.lang.Integer"
-		resultType="com.spring.postme.model.User">
-		SELECT * FROM users WHERE id = #{userId}
-	</select>
+    <select id="getUserById" parameterType="java.lang.Integer" resultType="com.spring.postme.model.User">
+        SELECT * FROM users WHERE id = #{userId}
+    </select>
 
-	<select id="getUserList"
-		resultType="com.spring.postme.model.User">
-		SELECT * FROM users
-	</select>
+    <select id="getUserList" resultType="com.spring.postme.model.User">
+        SELECT * FROM users
+    </select>
 
-	<!-- 사용자의 관리자 상태 업데이트 -->
-	<update id="updateUserAdminStatus">
-		UPDATE users
-		SET isAdmin = #{adminStatus}
-		WHERE id =
-		#{userId}
-	</update>
+    <update id="updateUserAdminStatus">
+        UPDATE users SET isAdmin = #{adminStatus} WHERE id = #{userId}
+    </update>
+    
 </mapper>

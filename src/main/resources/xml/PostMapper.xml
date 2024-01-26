@@ -3,84 +3,55 @@
 
 <mapper namespace="com.spring.postme.mapper.PostMapper">
 
-	<!-- 모든 게시글 조회 -->
-	<select id="findAll" resultType="com.spring.postme.model.Post">
-		SELECT * FROM Posts
-	</select>
+    <select id="findAll" resultType="com.spring.postme.model.Post">
+        SELECT * FROM Posts
+    </select>
 
-	<!-- ID로 게시글 조회 -->
-	<select id="findById" parameterType="java.lang.Integer"
-		resultType="com.spring.postme.model.Post">
-		SELECT * FROM Posts WHERE id = #{id}
-	</select>
+    <select id="findById" parameterType="java.lang.Integer" resultType="com.spring.postme.model.Post">
+        SELECT * FROM Posts WHERE id = #{id}
+    </select>
 
-	<!-- 게시글 추가 -->
-	<insert id="insertPost"
-		parameterType="com.spring.postme.model.Post" useGeneratedKeys="true"
-		keyProperty="id">
-		INSERT INTO Posts (userId, title, content)
-		VALUES
-		(#{userId}, #{title}, #{content})
-	</insert>
+    <insert id="insertPost" parameterType="com.spring.postme.model.Post" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO Posts (userId, title, content)
+        VALUES (#{userId}, #{title}, #{content})
+    </insert>
 
-	<!-- 게시글 업데이트 -->
-	<update id="updatePost"
-		parameterType="com.spring.postme.model.Post">
-		UPDATE Posts
-		SET userId = #{userId}
-		, title = #{title}
-		,
-		content = #{content}
-		WHERE id = #{id}
-	</update>
+    <update id="updatePost" parameterType="com.spring.postme.model.Post">
+        UPDATE Posts
+        SET userId = #{userId}, title = #{title}, content = #{content}
+        WHERE id = #{id}
+    </update>
 
-	<!-- ID로 게시글 삭제 -->
-	<delete id="deleteByPostId" parameterType="java.lang.Integer">
-		DELETE FROM Posts
-		WHERE id
-		= #{id}
-	</delete>
+    <delete id="deleteByPostId" parameterType="java.lang.Integer">
+        DELETE FROM Posts WHERE id = #{id}
+    </delete>
 
-	<!-- 페이징 처리된 게시글 조회 -->
-	<select id="findPostsByPage" parameterType="map"
-		resultType="com.spring.postme.model.Post">
-		SELECT * FROM Posts ORDER BY id DESC LIMIT #{offset},
-		#{pageSize}
-	</select>
+    <select id="findPostsByPage" parameterType="map" resultType="com.spring.postme.model.Post">
+        SELECT * FROM Posts ORDER BY id DESC LIMIT #{offset}, #{pageSize}
+    </select>
 
-	<select id="findSearchedPostsByPage" parameterType="map"
-		resultType="com.spring.postme.model.Post">
-		SELECT * FROM Posts
-		WHERE title LIKE CONCAT('%', #{query},
-		'%')
-		OR content LIKE CONCAT('%', #{query}, '%') ORDER BY id DESC LIMIT
-		#{offset},
-		#{pageSize}
-	</select>
+    <select id="findSearchedPostsByPage" parameterType="map" resultType="com.spring.postme.model.Post">
+        SELECT * FROM Posts
+        WHERE title LIKE CONCAT('%', #{query}, '%') OR content LIKE CONCAT('%', #{query}, '%')
+        ORDER BY id DESC LIMIT #{offset}, #{pageSize}
+    </select>
 
-	<select id="searchPosts" parameterType="String"
-		resultType="com.spring.postme.model.Post">
-		SELECT * FROM Posts
-		WHERE title LIKE CONCAT('%', #{query},
-		'%')
-		OR content LIKE CONCAT('%', #{query}, '%')
-	</select>
+    <select id="searchPosts" parameterType="String" resultType="com.spring.postme.model.Post">
+        SELECT * FROM Posts
+        WHERE title LIKE CONCAT('%', #{query}, '%') OR content LIKE CONCAT('%', #{query}, '%')
+    </select>
 
-	<select id="searchPostsCount" parameterType="String"
-		resultType="int">
-		SELECT COUNT(*) FROM Posts
-		WHERE title LIKE CONCAT('%',
-		#{query}, '%')
-		OR content LIKE CONCAT('%', #{query}, '%')
-	</select>
+    <select id="searchPostsCount" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM Posts
+        WHERE title LIKE CONCAT('%', #{query}, '%') OR content LIKE CONCAT('%', #{query}, '%')
+    </select>
 
-	<!-- 전체 게시글 수 조회 -->
-	<select id="countPosts" resultType="int">
-		SELECT COUNT(*) FROM Posts
-	</select>
+    <select id="countPosts" resultType="int">
+        SELECT COUNT(*) FROM Posts
+    </select>
 
-	<delete id="deleteAllPosts">
-		DELETE FROM posts
-	</delete>
+    <delete id="deleteAllPosts">
+        DELETE FROM Posts
+    </delete>
 
 </mapper>

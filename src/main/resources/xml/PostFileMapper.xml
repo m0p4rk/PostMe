@@ -4,52 +4,31 @@
 
 <mapper namespace="com.spring.postme.mapper.PostFileMapper">
 
-	<select id="getAttachmentFileByFileId" parameterType="_int"
-		resultType="com.spring.postme.model.PostFile">
-		SELECT
-		id,
-		userId,
-		postId,
-		filename,
-		filepath,
-		filesize
-		FROM
-		Postfiles
-		WHERE id = #{fileId}
-	</select>
+    <select id="getAttachmentFileByFileId" parameterType="_int" resultType="com.spring.postme.model.PostFile">
+        SELECT id, userId, postId, filename, filepath, filesize
+        FROM PostFiles
+        WHERE id = #{fileId}
+    </select>
 
-	<select id="getAttachmentFileByPostId" parameterType="_int"
-		resultType="com.spring.postme.model.PostFile">
-		SELECT
-		id,
-		userId,
-		postId,
-		filename,
-		filepath,
-		filesize
-		FROM
-		Postfiles
-		WHERE postId = #{postId}
+    <select id="getAttachmentFileByPostId" parameterType="_int" resultType="com.spring.postme.model.PostFile">
+        SELECT id, userId, postId, filename, filepath, filesize
+        FROM PostFiles
+        WHERE postId = #{postId}
+    </select>
 
-	</select>
+    <insert id="insertAttachmentFile" parameterType="com.spring.postme.model.PostFile">
+        INSERT INTO PostFiles (userId, postId, filename, filepath, filesize)
+        VALUES (#{userId}, #{postId}, #{filename}, #{filepath}, #{filesize})
+    </insert>
 
-	<insert id="insertAttachmentFile"
-		parameterType="com.spring.postme.model.PostFile">
-		INSERT INTO PostFiles (userId, postId, filename,
-		filepath, filesize)
-		VALUES (#{userId}, #{postId}, #{filename},
-		#{filepath}, #{filesize})
-	</insert>
+    <delete id="deleteAttachmentFileByFileId" parameterType="_int">
+        DELETE FROM PostFiles
+        WHERE id = #{id}
+    </delete>
 
-	<delete id="deleteAttachmentFileByFileId" parameterType="_int">
-		DELETE
-		FROM Postfiles
-		WHERE id = ${id}
-	</delete>
-
-	<delete id="deleteByPostId" parameterType="int">
-		DELETE FROM postfiles
-		WHERE postId = #{postId}
-	</delete>
+    <delete id="deleteByPostId" parameterType="int">
+        DELETE FROM PostFiles
+        WHERE postId = #{postId}
+    </delete>
 
 </mapper>
