@@ -22,6 +22,14 @@ public class UserController {
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
+	
+	@GetMapping("/login")
+	public String showLoginPage(HttpSession session) {
+		if (session.getAttribute("user") != null) {
+			return "redirect: /";
+		}
+		return "login";
+	}
 
 	@PostMapping("/login.do")
 	public String login(@RequestParam("username") String username, @RequestParam("password") String password,
@@ -47,6 +55,11 @@ public class UserController {
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	@GetMapping("/register")
+	public String showRegisterPage() {
+		return "register";
 	}
 
 	@PostMapping("/register.do")
