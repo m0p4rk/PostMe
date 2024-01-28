@@ -117,7 +117,6 @@ body {
 					<span class="inner-status">Opps! Server Page Error!</span> <span
 						class="inner-detail">Unfortunately we're having trouble
 						loading the page you are looking for. Please come back in a while.</span>
-					<!--END CONTENT-->
 				</div>
 			</div>
 		</div>

@@ -46,13 +46,11 @@ body {
 </head>
 <body>
 	<%
-		response.setHeader("Pragma", "no-cache");
+	response.setHeader("Pragma", "no-cache");
 	response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 0L);
 	%>
-
-
 	<div class="container">
 		<h2 class="mb-4 text-center">PostMe</h2>
 		<form action="/login.do" method="post">

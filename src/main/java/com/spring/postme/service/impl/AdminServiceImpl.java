@@ -1,6 +1,7 @@
 package com.spring.postme.service.impl;
 
 public interface AdminServiceImpl {
+	
 	int countUsers();
 
 	int countPosts();
@@ -12,4 +13,5 @@ public interface AdminServiceImpl {
 	void deleteAllPosts();
 
 	void deleteAllComments();
+	
 }
