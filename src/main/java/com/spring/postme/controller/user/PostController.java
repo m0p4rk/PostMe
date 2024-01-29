@@ -50,6 +50,11 @@ public class PostController {
 
 		return "main";
 	}
+	
+	@GetMapping("/dashboard")
+	public String redirectToDashboard() {
+		return "postDashboard";
+	}
 
 	@GetMapping("/posts/search")
 	public String searchPosts(@RequestParam String query, @RequestParam(value = "page", defaultValue = "1") int page,
